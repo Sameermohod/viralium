@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700;800&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --font-syne: 'Syne', sans-serif;
-  --font-outfit: 'Outfit', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-syne: var(--font-space-grotesk);
+  --font-outfit: var(--font-inter);
   --color-gold: #d4af37;
   --color-gold-hover: #b8962c;
   --color-brand-orange: #ff6b00;
@@ -15,6 +17,75 @@
   --color-luxury-gray: #1b1b1e;
   --color-luxury-text: #a0a0a5;
   --color-luxury-light: #f5f5f7;
+}
+
+/* Custom Spacing & Border Radius Overrides to Match Design Spec */
+@utility py-24 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  @media (min-width: 768px) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  @media (min-width: 1024px) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+}
+
+@utility py-36 {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  @media (min-width: 768px) {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  @media (min-width: 1024px) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+}
+
+@utility p-8 {
+  padding: 24px;
+  @media (min-width: 768px) {
+    padding: 32px;
+  }
+}
+
+@utility p-10 {
+  padding: 24px;
+  @media (min-width: 768px) {
+    padding: 32px;
+  }
+}
+
+@utility px-8 {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+@utility py-4 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+@utility rounded-3xl {
+  border-radius: 20px;
+  @media (min-width: 768px) {
+    border-radius: 24px;
+  }
+}
+
+@utility rounded-2xl {
+  border-radius: 12px;
+  @media (min-width: 768px) {
+    border-radius: 16px;
+  }
+}
+
+@utility rounded-xl {
+  border-radius: 12px;
 }
 
 /* Custom Utilities for Tailwind v4 */
@@ -73,7 +144,10 @@ html {
   overflow-x: hidden;
   background-color: var(--color-luxury-black);
   color: var(--color-luxury-light);
-  font-family: var(--font-outfit);
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 body {
@@ -81,6 +155,10 @@ body {
   padding: 0;
   background-color: var(--color-luxury-black);
   overflow-x: hidden;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
   /* Hide standard cursor on large screen devices with cursor capability */
   @media (pointer: fine) {
     cursor: none;
@@ -142,9 +220,63 @@ embed {
   background: radial-gradient(circle 800px at var(--x, 50%) var(--y, 50%), rgba(255, 107, 0, 0.06), transparent 80%);
 }
 
-/* Heading Typography */
+/* Heading Typography & Sizing */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-syne);
+  font-family: var(--font-space-grotesk);
+}
+
+h1 {
+  font-size: clamp(40px, 8vw, 96px); /* Desktop: 72-96px, Mobile: 40-52px */
+  font-weight: 800; /* 700-800 */
+  line-height: 1.05; /* 1.0-1.1 */
+}
+
+h2 {
+  font-size: clamp(32px, 5vw, 64px); /* Desktop: 48-64px, Mobile: 32-36px */
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: clamp(24px, 3.5vw, 40px); /* Desktop: 32-40px, Mobile: 24-28px */
+  font-weight: 700; /* 600-700 */
+  line-height: 1.2;
+}
+
+h4 {
+  font-size: clamp(20px, 2.5vw, 28px); /* Desktop: 24-28px, Mobile: 20-22px */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.body-large {
+  font-size: clamp(16px, 1.8vw, 20px); /* Desktop: 18-20px, Mobile: 16px */
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.small-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.caption-text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 /* Lenis CSS integration */
