@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import Magnetic from './Magnetic';
@@ -7,7 +7,19 @@ export default function Showreel() {
   const [isPlaying, setIsPlaying] = useState(false);
   const containerRef = useRef(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previewVideoRef = useRef<HTMLVideoElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
+  const isSectionVisible = useInView(containerRef, { amount: 0.1 });
+
+  useEffect(() => {
+    if (previewVideoRef.current) {
+      if (isSectionVisible) {
+        previewVideoRef.current.play().catch(() => {});
+      } else {
+        previewVideoRef.current.pause();
+      }
+    }
+  }, [isSectionVisible]);
 
   return (
     <section 
@@ -49,6 +61,7 @@ export default function Showreel() {
         >
           {/* Muted Autoplay Video Background */}
           <video
+            ref={previewVideoRef}
             autoPlay
             muted
             loop

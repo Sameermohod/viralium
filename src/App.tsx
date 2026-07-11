@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, AnimatePresence, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion';
 import Lenis from 'lenis';
 import { MessageSquare } from 'lucide-react';
 
@@ -27,6 +27,14 @@ export default function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
   const { scrollYProgress } = useScroll();
 
+  // GPU-Accelerated Spotlight Motion Values
+  const spotlightX = useMotionValue(0);
+  const spotlightY = useMotionValue(0);
+
+  const springConfig = { damping: 50, stiffness: 200, mass: 0.5 };
+  const spotlightXSpring = useSpring(spotlightX, springConfig);
+  const spotlightYSpring = useSpring(spotlightY, springConfig);
+
   useEffect(() => {
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
@@ -46,12 +54,10 @@ export default function App() {
 
     requestAnimationFrame(raf);
 
-    // Spotlight cursor radial background tracking
+    // Spotlight cursor tracking
     const handleMouseMove = (e: MouseEvent) => {
-      const xPercentage = (e.clientX / window.innerWidth) * 100;
-      const yPercentage = (e.clientY / window.innerHeight) * 100;
-      document.documentElement.style.setProperty('--x', `${xPercentage}%`);
-      document.documentElement.style.setProperty('--y', `${yPercentage}%`);
+      spotlightX.set(e.clientX);
+      spotlightY.set(e.clientY);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -60,7 +66,9 @@ export default function App() {
       lenis.destroy();
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [spotlightX, spotlightY]);
+
+  const spotlightBg = useMotionTemplate`radial-gradient(circle 800px at ${spotlightXSpring}px ${spotlightYSpring}px, rgba(255, 107, 0, 0.05), transparent 80%)`;
 
   return (
     <>
@@ -79,8 +87,11 @@ export default function App() {
             transition={{ duration: 0.8 }}
             className="relative min-h-screen bg-neutral-950 grid-bg"
           >
-            {/* Spotlight radial gradient overlay */}
-            <div className="fixed inset-0 radial-glow pointer-events-none z-0" />
+            {/* GPU-optimized Spotlight radial gradient overlay */}
+            <motion.div 
+              className="fixed inset-0 pointer-events-none z-0" 
+              style={{ background: spotlightBg }}
+            />
 
             {/* Top Scroll Progress Indicator */}
             <motion.div

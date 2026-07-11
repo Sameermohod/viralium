@@ -1,9 +1,25 @@
 import { useState, useRef, useEffect } from 'react';
+import { useInView } from 'framer-motion';
 
 export default function BeforeAfter() {
   const [sliderPosition, setSliderPosition] = useState(50); // percentage
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
+  const isSectionVisible = useInView(containerRef, { amount: 0.1 });
+
+  useEffect(() => {
+    if (videoRef1.current && videoRef2.current) {
+      if (isSectionVisible) {
+        videoRef1.current.play().catch(() => {});
+        videoRef2.current.play().catch(() => {});
+      } else {
+        videoRef1.current.pause();
+        videoRef2.current.pause();
+      }
+    }
+  }, [isSectionVisible]);
 
   const handleMove = (clientX: number) => {
     if (!containerRef.current) return;
@@ -60,6 +76,7 @@ export default function BeforeAfter() {
           {/* Layer 1: Edited Video (Final Graded Cut) */}
           <div className="absolute inset-0 w-full h-full">
             <video
+              ref={videoRef1}
               autoPlay
               muted
               loop
@@ -85,6 +102,7 @@ export default function BeforeAfter() {
             style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
           >
             <video
+              ref={videoRef2}
               autoPlay
               muted
               loop

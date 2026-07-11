@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Play } from 'lucide-react';
 import Magnetic from './Magnetic';
 import AnimatedCounter from './AnimatedCounter';
@@ -6,6 +7,20 @@ import AnimatedCounter from './AnimatedCounter';
 export default function Hero() {
   const headline = "We Create Content That Builds Brands.";
   const words = headline.split(" ");
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isSectionInView = useInView(sectionRef, { amount: 0.1 });
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isSectionInView) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isSectionInView]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -43,10 +58,11 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-950 text-white">
+    <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-950 text-white">
       {/* Background Cinematic Video */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden select-none">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { ChevronUp, ChevronDown, Play, MessageCircle, Heart, Share2 } from 'lucide-react';
 
 interface Reel {
@@ -13,6 +13,19 @@ interface Reel {
 
 export default function ReelsShowcase() {
   const [activeReelIdx, setActiveReelIdx] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isSectionVisible = useInView(sectionRef, { amount: 0.1 });
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isSectionVisible) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isSectionVisible, activeReelIdx]);
 
   const reels: Reel[] = [
     {
@@ -50,7 +63,7 @@ export default function ReelsShowcase() {
   };
 
   return (
-    <section className="py-24 bg-neutral-950 text-white relative overflow-hidden">
+    <section ref={sectionRef} className="py-24 bg-neutral-950 text-white relative overflow-hidden">
       {/* Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/5 blur-[120px] rounded-full" />
 
@@ -98,6 +111,7 @@ export default function ReelsShowcase() {
                     className="absolute inset-0 w-full h-full"
                   >
                     <video
+                      ref={videoRef}
                       autoPlay
                       muted
                       loop
