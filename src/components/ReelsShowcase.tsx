@@ -102,6 +102,7 @@ export default function ReelsShowcase() {
                       muted
                       loop
                       playsInline
+                      preload="metadata"
                       className="w-full h-full object-cover"
                     >
                       <source src={reels[activeReelIdx].videoSrc} type="video/mp4" />

@@ -116,7 +116,7 @@ export default function CustomCursor() {
     <>
       {/* Outer Follower Ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-50 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99999] flex items-center justify-center -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -133,7 +133,7 @@ export default function CustomCursor() {
 
       {/* Center Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-[#ff6b00] rounded-full pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
+        className="fixed top-0 left-0 w-2 h-2 bg-[#ff6b00] rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,

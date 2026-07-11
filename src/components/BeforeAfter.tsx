@@ -64,6 +64,7 @@ export default function BeforeAfter() {
               muted
               loop
               playsInline
+              preload="metadata"
               className="w-full h-full object-cover"
             >
               <source 
@@ -88,6 +89,7 @@ export default function BeforeAfter() {
               muted
               loop
               playsInline
+              preload="metadata"
               className="absolute inset-0 w-full h-full object-cover filter saturate-[0.35] contrast-[0.7] brightness-[1.08]"
               style={{ width: containerRef.current?.getBoundingClientRect().width }}
             >

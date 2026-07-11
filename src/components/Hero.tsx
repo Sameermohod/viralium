@@ -51,6 +51,7 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="metadata"
           className="w-full h-full object-cover opacity-35 scale-105"
         >
           <source 

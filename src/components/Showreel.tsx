@@ -53,6 +53,7 @@ export default function Showreel() {
             muted
             loop
             playsInline
+            preload="metadata"
             className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
           >
             <source 
@@ -121,6 +122,8 @@ export default function Showreel() {
                 ref={videoRef}
                 autoPlay
                 controls
+                playsInline
+                preload="auto"
                 className="w-full h-full object-contain"
               >
                 <source 
