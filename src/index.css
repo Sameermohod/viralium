@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-syne: 'Syne', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+  --color-gold: #d4af37;
+  --color-gold-hover: #b8962c;
+  --color-brand-orange: #ff6b00;
+  --color-brand-orange-hover: #e05e00;
+  --color-luxury-black: #050505;
+  --color-luxury-dark: #0f0f11;
+  --color-luxury-card: rgba(18, 18, 20, 0.6);
+  --color-luxury-gray: #1b1b1e;
+  --color-luxury-text: #a0a0a5;
+  --color-luxury-light: #f5f5f7;
+}
+
+/* Custom Utilities for Tailwind v4 */
+@utility glassmorphism {
+  background: rgba(15, 15, 17, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@utility glassmorphism-light {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(135deg, #f5f5f7 0%, #d4af37 50%, #ff6b00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility text-gradient-purple {
+  background: linear-gradient(135deg, #ff6b00 0%, #a855f7 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glow-hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(135deg, var(--color-brand-orange), var(--color-gold), #a855f7);
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.5s ease;
+  }
+
+  &:hover::after {
+    opacity: 0.6;
+  }
+}
+
+/* Base resets & customization */
+html {
+  scroll-behavior: initial; /* Lenis handles smooth scrolling */
+  overflow-x: hidden;
+  background-color: var(--color-luxury-black);
+  color: var(--color-luxury-light);
+  font-family: var(--font-outfit);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-luxury-black);
+  overflow-x: hidden;
+  /* Hide standard cursor on large screen devices with cursor capability */
+  @media (pointer: fine) {
+    cursor: none;
+  }
+}
+
+/* Remove cursor:none for specific interactive elements to act as fallback */
+iframe, 
+object, 
+embed {
+  cursor: auto;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-luxury-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-luxury-gray);
+  border-radius: 4px;
+  border: 2px solid var(--color-luxury-black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-orange);
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Floating particles background */
+.grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Radial spotlight effect */
+.radial-glow {
+  background: radial-gradient(circle 800px at var(--x, 50%) var(--y, 50%), rgba(255, 107, 0, 0.06), transparent 80%);
+}
+
+/* Heading Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-syne);
+}
+
+/* Lenis CSS integration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
