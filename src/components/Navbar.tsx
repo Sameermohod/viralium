@@ -51,16 +51,20 @@ export default function Navbar() {
           {/* Logo */}
           <a 
             href="#" 
-            className="flex items-center gap-1 group"
+            className="flex items-center gap-2.5 group"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
+            <img 
+              src="/logo.png" 
+              alt="Viraliam Logo" 
+              className="w-8 h-8 object-cover rounded-lg border border-white/10 group-hover:scale-105 transition-transform duration-300"
+            />
             <span className="font-syne font-extrabold text-2xl md:text-3xl tracking-tighter text-white transition-colors duration-300">
               VIRALIAM
             </span>
-            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#ff6b00] to-[#d4af37] animate-pulse" />
           </a>
 
           {/* Desktop Nav Links */}
@@ -123,7 +127,14 @@ export default function Navbar() {
             transition={{ type: 'tween', duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
           >
             <div className="flex justify-between items-center">
-              <span className="font-syne font-bold text-2xl tracking-tighter text-white">VIRALIAM</span>
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/logo.png" 
+                  alt="Viraliam Logo" 
+                  className="w-7 h-7 object-cover rounded-lg border border-white/10"
+                />
+                <span className="font-syne font-bold text-2xl tracking-tighter text-white">VIRALIAM</span>
+              </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-2 text-white hover:text-[#ff6b00] transition-colors"

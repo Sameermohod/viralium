@@ -52,6 +52,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
           {/* Central Logo / Typography */}
           <div className="flex flex-col items-start max-w-4xl mx-auto w-full justify-center flex-grow">
+            <motion.div 
+              className="mb-6 rounded-2xl overflow-hidden border border-white/10 bg-neutral-900 p-2 shadow-2xl"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+            >
+              <img 
+                src="/logo.png" 
+                alt="Viraliam Icon" 
+                className="w-16 h-16 md:w-20 md:h-20 object-cover"
+              />
+            </motion.div>
+            
             <div className="overflow-hidden mb-2">
               <motion.h1 
                 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-white font-syne"

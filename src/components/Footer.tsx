@@ -36,11 +36,15 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-1.5 mb-6">
+              <div className="flex items-center gap-2.5 mb-6">
+                <img 
+                  src="/logo.png" 
+                  alt="Viraliam Logo" 
+                  className="w-8 h-8 object-cover rounded-lg border border-white/10"
+                />
                 <span className="font-syne font-extrabold text-2xl tracking-tighter text-white">
                   VIRALIAM
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00]" />
               </div>
               <p className="text-xs text-neutral-400 font-light leading-relaxed max-w-sm">
                 A premium cinematic production, branding, and digital marketing agency engineering growth assets for industry-leading brands.
