@@ -34,7 +34,7 @@ export default function ReelsShowcase() {
       title: 'Neon Urban Streetwear',
       views: '1.2M views',
       description: 'Staggered visual pacing cut for clothing drops. Dynamic zoom transitions synced to deep bass loops.',
-      sound: 'Original Audio - Viralium Music'
+      sound: 'Original Audio - Viraliam Music'
     },
     {
       id: 2,
@@ -128,7 +128,7 @@ export default function ReelsShowcase() {
                     {/* Instagram UI Overlays */}
                     <div className="absolute bottom-6 left-4 right-12 z-10 flex flex-col items-start text-left">
                       <span className="text-[10px] uppercase font-bold tracking-widest text-[#ff6b00] mb-1">
-                        @viralium.studio
+                        @viraliam.studio
                       </span>
                       <h4 className="text-sm font-bold text-white mb-2">
                         {reels[activeReelIdx].title}

@@ -92,7 +92,7 @@ export default function Showreel() {
           {/* Bottom metadata tags */}
           <div className="absolute bottom-6 left-8 right-8 flex justify-between items-center z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="text-xs font-bold tracking-widest uppercase text-white/80">
-              Viralium Creative Showreel ©2026
+              Viraliam Creative Showreel ©2026
             </span>
             <span className="text-xs font-bold tracking-widest uppercase bg-white/10 px-3 py-1 rounded-full backdrop-blur-md text-white/90">
               02:14 MIN

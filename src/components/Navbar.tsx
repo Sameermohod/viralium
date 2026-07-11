@@ -58,7 +58,7 @@ export default function Navbar() {
             }}
           >
             <span className="font-syne font-extrabold text-2xl md:text-3xl tracking-tighter text-white transition-colors duration-300">
-              VIRALIUM
+              VIRALIAM
             </span>
             <span className="w-2 h-2 rounded-full bg-gradient-to-r from-[#ff6b00] to-[#d4af37] animate-pulse" />
           </a>
@@ -123,7 +123,7 @@ export default function Navbar() {
             transition={{ type: 'tween', duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
           >
             <div className="flex justify-between items-center">
-              <span className="font-syne font-bold text-2xl tracking-tighter text-white">VIRALIUM</span>
+              <span className="font-syne font-bold text-2xl tracking-tighter text-white">VIRALIAM</span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-2 text-white hover:text-[#ff6b00] transition-colors"

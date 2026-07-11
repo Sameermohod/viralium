@@ -46,7 +46,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         >
           {/* Header metadata */}
           <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-neutral-500 font-medium">
-            <span>Viralium Studio v1.0</span>
+            <span>Viraliam Studio v1.0</span>
             <span>Est. 2026</span>
           </div>
 
@@ -59,7 +59,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
               >
-                VIRALIUM
+                VIRALIAM
               </motion.h1>
             </div>
             

@@ -14,7 +14,7 @@ export default function FAQ() {
 
   const faqs: FAQItem[] = [
     {
-      question: 'What types of cameras and gear does Viralium shoot on?',
+      question: 'What types of cameras and gear does Viraliam shoot on?',
       answer: 'We capture visuals using industry-standard digital cinema platforms, including RED V-Raptor and Sony FX series, paired with premium anamorphic prime lenses, active gimbal stabilization rigs, and professional DJI Inspire series drones for aerial shoots.'
     },
     {

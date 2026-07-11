@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Phone, MapPin, Send, ArrowUpRight } from 'lucide-react';
+import { MessageSquare, Phone, Send, ArrowUpRight } from 'lucide-react';
 import Magnetic from './Magnetic';
 
 export default function ContactForm() {
@@ -114,11 +114,11 @@ export default function ContactForm() {
               </motion.p>
             </div>
 
-            {/* Quick action buttons */}
+            {/* Quick action widgets */}
             <div className="flex flex-col gap-4 mb-12">
               {/* WhatsApp Widget */}
               <a
-                href="https://wa.me/919999999999?text=Hi%20Viralium,%20I'd%20like%20to%20book%20a%20consultation."
+                href="https://wa.me/917264021161?text=Hi%20Viraliam,%20I'd%20like%20to%20book%20a%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-4 transition-all duration-300 group"
@@ -129,14 +129,14 @@ export default function ContactForm() {
                 <div className="text-left">
                   <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">Chat on WhatsApp</span>
                   <span className="text-sm font-semibold text-white flex items-center gap-1">
-                    +91 99999 99999 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    +91 72640 21161 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
                 </div>
               </a>
 
               {/* Call Widget */}
               <a
-                href="tel:+919999999999"
+                href="tel:+917264021161"
                 className="flex items-center gap-4 bg-neutral-900/40 hover:bg-neutral-900 border border-white/5 hover:border-white/20 rounded-2xl p-4 transition-all duration-300 group"
               >
                 <div className="p-3 bg-[#ff6b00] text-white rounded-xl shadow-lg shadow-brand-orange/20">
@@ -145,36 +145,31 @@ export default function ContactForm() {
                 <div className="text-left">
                   <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider block">Direct Studio Line</span>
                   <span className="text-sm font-semibold text-white flex items-center gap-1">
-                    +91 99999 99999 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    +91 72640 21161 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
                 </div>
               </a>
-
-              {/* Studio Map Widget */}
-              <div className="flex items-center gap-4 bg-neutral-900/40 border border-white/5 rounded-2xl p-4">
-                <div className="p-3 bg-neutral-850 border border-white/5 rounded-xl text-purple-400">
-                  <MapPin size={20} />
-                </div>
-                <div className="text-left">
-                  <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider block">Studio Office</span>
-                  <span className="text-xs text-white">Film City Sector-16A, Noida, UP, India</span>
-                </div>
-              </div>
             </div>
 
             {/* Social icons */}
             <div className="flex gap-4">
-              <a href="#" className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" aria-label="Instagram">
+              <a 
+                href="https://www.instagram.com/viraliam_?igsh=cXdvam8zdDNydnV0" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" 
+                aria-label="Instagram"
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
               </a>
-              <a href="#" className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" aria-label="YouTube">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-              </a>
-              <a href="#" className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" aria-label="LinkedIn">
+              <a 
+                href="https://www.linkedin.com/company/viraliam/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" 
+                aria-label="LinkedIn"
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-              <a href="#" className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" aria-label="Facebook">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
               </a>
             </div>
           </div>

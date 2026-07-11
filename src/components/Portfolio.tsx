@@ -114,7 +114,7 @@ export default function Portfolio() {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80',
       thumbnail: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80',
-      client: 'Viralium BTS',
+      client: 'Viraliam BTS',
       date: 'Ongoing',
       desc: 'Close-up look at our custom camera rigs, wireless video systems, anamorphic lenses, and stabilizer setups.',
       aspectClass: 'aspect-[4/3]'

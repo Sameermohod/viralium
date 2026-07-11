@@ -38,7 +38,7 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-1.5 mb-6">
                 <span className="font-syne font-extrabold text-2xl tracking-tighter text-white">
-                  VIRALIUM
+                  VIRALIAM
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b00]" />
               </div>
@@ -91,17 +91,21 @@ export default function Footer() {
               02 / SOCIAL HANDLES
             </h4>
             <div className="flex flex-col gap-2.5">
-              <a href="#" className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group">
+              <a 
+                href="https://www.instagram.com/viraliam_?igsh=cXdvam8zdDNydnV0" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group"
+              >
                 Instagram <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
-              <a href="#" className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group">
-                Vimeo / YouTube <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a href="#" className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group">
+              <a 
+                href="https://www.linkedin.com/company/viraliam/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group"
+              >
                 LinkedIn Profile <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a href="#" className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5 group">
-                Facebook Page <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
           </div>
@@ -111,7 +115,7 @@ export default function Footer() {
         {/* Bottom row: copyright & tech specs disclosure */}
         <div className="pt-12 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
           <span className="text-[10px] text-neutral-600 uppercase tracking-widest font-mono">
-            © 2026 VIRALIUM. ALL RIGHTS RESERVED. DESIGN BY VIRALIUM STUDIO.
+            © 2026 VIRALIAM. ALL RIGHTS RESERVED. DESIGN BY VIRALIAM STUDIO.
           </span>
 
           {/* Technology stack small cards */}

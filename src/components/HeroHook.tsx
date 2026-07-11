@@ -52,7 +52,7 @@ export default function HeroHook() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="text-xs uppercase tracking-widest text-neutral-500 font-bold mb-4"
           >
-            The Viralium Manifesto
+            The Viraliam Manifesto
           </motion.p>
           
           <motion.h2

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MessageSquare, Video, Camera, Users, Zap, TrendingUp, Compass } from 'lucide-react';
 
-export default function WhyViralium() {
+export default function WhyViraliam() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
 
@@ -55,7 +55,7 @@ export default function WhyViralium() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
           >
-            The Viralium Edge
+            The Viraliam Edge
           </motion.p>
           
           <motion.h2
@@ -84,7 +84,7 @@ export default function WhyViralium() {
             
             <div className="border-t border-white/20 pt-6 mt-8">
               <p className="text-xs uppercase tracking-wider text-white/80 font-bold">
-                Viralium Quality Benchmark
+                Viraliam Quality Benchmark
               </p>
               <p className="text-sm text-white/90 font-light mt-1.5 leading-relaxed">
                 We combine cinematic visual arts with performance-marketing algorithms to guarantee that every video produced achieves maximum reach and conversion.

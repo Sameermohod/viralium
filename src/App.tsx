@@ -13,7 +13,7 @@ import Showreel from './components/Showreel';
 import Portfolio from './components/Portfolio';
 import Services from './components/Services';
 import ProcessTimeline from './components/ProcessTimeline';
-import WhyViralium from './components/WhyViralium';
+import WhyViraliam from './components/WhyViraliam';
 import BeforeAfter from './components/BeforeAfter';
 import ReelsShowcase from './components/ReelsShowcase';
 import BehindTheScenes from './components/BehindTheScenes';
@@ -110,7 +110,7 @@ export default function App() {
               <Portfolio />
               <Services />
               <ProcessTimeline />
-              <WhyViralium />
+              <WhyViraliam />
               <BeforeAfter />
               <ReelsShowcase />
               <BehindTheScenes />
@@ -125,7 +125,7 @@ export default function App() {
 
             {/* Floating Action Button: WhatsApp */}
             <motion.a
-              href="https://wa.me/919999999999?text=Hi%20Viralium,%20I'd%20like%20to%20book%20a%20consultation."
+              href="https://wa.me/917264021161?text=Hi%20Viraliam,%20I'd%20like%20to%20book%20a%20consultation."
               target="_blank"
               rel="noopener noreferrer"
               initial={{ scale: 0, opacity: 0 }}

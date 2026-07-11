@@ -21,7 +21,7 @@ export default function Testimonials() {
       name: 'Sarah Jenkins',
       role: 'Director of Marketing',
       company: 'Aura Luxury Perfume',
-      content: 'Viralium exceeded all expectations. The cinematic product video they shot increased our website conversion rates by 48% and generated millions of impressions on social media.',
+      content: 'Viraliam exceeded all expectations. The cinematic product video they shot increased our website conversion rates by 48% and generated millions of impressions on social media.',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80'
     },
@@ -39,7 +39,7 @@ export default function Testimonials() {
       name: 'Elena Rostova',
       role: 'Creative Lead',
       company: 'Solstice Fashion Label',
-      content: 'The lighting, model styling, and composition of our photography shoots were spectacular. The turnaround speed was impressive. Viralium is our go-to creative agency.',
+      content: 'The lighting, model styling, and composition of our photography shoots were spectacular. The turnaround speed was impressive. Viraliam is our go-to creative agency.',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'
     }
