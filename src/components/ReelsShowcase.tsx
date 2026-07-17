@@ -128,7 +128,7 @@ export default function ReelsShowcase() {
                     {/* Instagram UI Overlays */}
                     <div className="absolute bottom-6 left-4 right-12 z-10 flex flex-col items-start text-left">
                       <span className="text-[10px] uppercase font-bold tracking-widest text-[#ff6b00] mb-1">
-                        @viraliam.studio
+                        @viraliam_
                       </span>
                       <h4 className="text-sm font-bold text-white mb-2">
                         {reels[activeReelIdx].title}
