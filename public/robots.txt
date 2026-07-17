@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://viraliam.studio/sitemap.xml
+Sitemap: https://www.viraliam.com/sitemap_index.xml
