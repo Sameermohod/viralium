@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useContent } from '../context/ContentContext';
 import { Download, RotateCcw, LogOut, Key, Eye } from 'lucide-react';
 
@@ -85,10 +86,13 @@ export default function AdminControls() {
         </div>
       )}
 
-      {/* Login Modal */}
-      {showLoginModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
-          <div className="w-full max-w-sm bg-neutral-950 border border-white/10 rounded-2xl p-6 shadow-2xl relative">
+      {/* Login Modal (Portalled to document.body to ensure it renders above everything) */}
+      {showLoginModal && createPortal(
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[99999] flex items-center justify-center p-4 text-white">
+          <div 
+            className="w-full max-w-sm bg-neutral-950 border border-white/10 rounded-2xl p-6 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setShowLoginModal(false)}
               className="absolute top-4 right-4 text-neutral-500 hover:text-white"
@@ -128,7 +132,8 @@ export default function AdminControls() {
               </button>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

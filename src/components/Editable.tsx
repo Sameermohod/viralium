@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useContent } from '../context/ContentContext';
 import { Edit2, Save, X, Upload as UploadIcon } from 'lucide-react';
 
@@ -91,9 +92,9 @@ export default function Editable({ children, path, label, type = 'text', classNa
         <Edit2 size={12} />
       </button>
 
-      {/* Edit Modal */}
-      {isEditing && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+      {/* Edit Modal (Portalled to document.body to avoid stacking context/transforms confinement) */}
+      {isEditing && createPortal(
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[99999] flex items-center justify-center p-4 text-white">
           <div 
             className="w-full max-w-lg bg-neutral-950 border border-white/10 rounded-2xl p-6 shadow-2xl relative"
             onClick={(e) => e.stopPropagation()}
@@ -181,7 +182,8 @@ export default function Editable({ children, path, label, type = 'text', classNa
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

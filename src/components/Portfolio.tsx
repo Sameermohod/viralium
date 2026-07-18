@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
@@ -286,11 +287,11 @@ export default function Portfolio() {
         </motion.div>
       </div>
 
-      {/* Project details popup modal */}
+      {/* Project details popup modal (Portalled to document.body) */}
       <AnimatePresence>
-        {selectedItem && (
+        {selectedItem && createPortal(
           <motion.div
-            className="fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-8"
+            className="fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-[99999] flex items-center justify-center p-4 md:p-8 text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -300,7 +301,7 @@ export default function Portfolio() {
             {/* Close button */}
             <button
               onClick={() => setSelectedItem(null)}
-              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#ff6b00] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50"
+              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#ff6b00] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 cursor-pointer"
             >
               <X size={20} />
             </button>
@@ -361,14 +362,18 @@ export default function Portfolio() {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </motion.div>,
+          document.body
         )}
       </AnimatePresence>
 
-      {/* Portfolio Item Add/Edit Form Modal */}
-      {(isAddingNew || editingItem) && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[9999] flex items-center justify-center p-4 overflow-y-auto">
-          <div className="w-full max-w-xl bg-neutral-950 border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative my-8">
+      {/* Portfolio Item Add/Edit Form Modal (Portalled to document.body) */}
+      {(isAddingNew || editingItem) && createPortal(
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] flex items-center justify-center p-4 overflow-y-auto text-white">
+          <div 
+            className="w-full max-w-xl bg-neutral-950 border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => {
                 setIsAddingNew(false);
@@ -543,7 +548,8 @@ export default function Portfolio() {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

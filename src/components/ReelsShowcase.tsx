@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { ChevronUp, ChevronDown, Play, MessageCircle, Heart, Share2, Plus, Edit, Trash2, Save, X, Upload as UploadIcon } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
@@ -324,10 +325,13 @@ export default function ReelsShowcase() {
         </div>
       </div>
 
-      {/* Reel Item Add/Edit Form Modal */}
-      {(isAddingNew || editingReel) && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-neutral-950 border border-white/10 rounded-2xl p-6 shadow-2xl relative">
+      {/* Reel Item Add/Edit Form Modal (Portalled to document.body) */}
+      {(isAddingNew || editingReel) && createPortal(
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] flex items-center justify-center p-4 text-white">
+          <div 
+            className="w-full max-w-md bg-neutral-950 border border-white/10 rounded-2xl p-6 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => {
                 setIsAddingNew(false);
@@ -440,7 +444,8 @@ export default function ReelsShowcase() {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
