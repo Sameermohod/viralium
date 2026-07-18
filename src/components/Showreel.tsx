@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import Magnetic from './Magnetic';
+import { useContent } from '../context/ContentContext';
+import Editable from './Editable';
 
 export default function Showreel() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,6 +12,7 @@ export default function Showreel() {
   const previewVideoRef = useRef<HTMLVideoElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
   const isSectionVisible = useInView(containerRef, { amount: 0.1 });
+  const { content } = useContent();
 
   useEffect(() => {
     if (previewVideoRef.current) {
@@ -50,30 +53,29 @@ export default function Showreel() {
         </div>
 
         {/* Cinematic Video Container */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          className="relative aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden group shadow-2xl shadow-black/80 border border-white/5 cursor-pointer"
-          onClick={() => setIsPlaying(true)}
-          data-cursor="play"
-          data-cursor-text="play"
-        >
-          {/* Muted Autoplay Video Background */}
-          <video
-            ref={previewVideoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+        <Editable path={['showreel', 'videoSrc']} label="Showreel Video URL" type="url" className="relative aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden group shadow-2xl shadow-black/80 border border-white/5 cursor-pointer">
+          <motion.div
+            className="w-full h-full relative"
+            onClick={() => setIsPlaying(true)}
+            data-cursor="play"
+            data-cursor-text="play"
           >
-            <source 
-              src="https://player.vimeo.com/external/517617478.sd.mp4?s=74f4b9f271efd36f2f3d9d71fa9d1c1c1f4e1f72&profile_id=165&oauth2_token_id=57447761" 
-              type="video/mp4" 
-            />
-          </video>
+            {/* Muted Autoplay Video Background */}
+            <video
+              key={content.showreel.videoSrc}
+              ref={previewVideoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+            >
+              <source 
+                src={content.showreel.videoSrc} 
+                type="video/mp4" 
+              />
+            </video>
 
           {/* Dark Glassmorphic Overlay */}
           <div className="absolute inset-0 bg-neutral-950/40 group-hover:bg-neutral-950/20 transition-colors duration-500 flex items-center justify-center">
@@ -98,7 +100,8 @@ export default function Showreel() {
               02:14 MIN
             </span>
           </div>
-        </motion.div>
+          </motion.div>
+        </Editable>
       </div>
 
       {/* Fullscreen Theatre Lightbox Modal */}
@@ -132,6 +135,7 @@ export default function Showreel() {
               transition={{ type: 'spring', damping: 25, stiffness: 180 }}
             >
               <video
+                key={content.showreel.videoSrc}
                 ref={videoRef}
                 autoPlay
                 controls
@@ -140,7 +144,7 @@ export default function Showreel() {
                 className="w-full h-full object-contain"
               >
                 <source 
-                  src="https://player.vimeo.com/external/517617478.sd.mp4?s=74f4b9f271efd36f2f3d9d71fa9d1c1c1f4e1f72&profile_id=165&oauth2_token_id=57447761" 
+                  src={content.showreel.videoSrc} 
                   type="video/mp4" 
                 />
               </video>

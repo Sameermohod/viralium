@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import Magnetic from './Magnetic';
+import { useContent } from '../context/ContentContext';
+import Editable from './Editable';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { content } = useContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,14 +60,18 @@ export default function Navbar() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            <img 
-              src="/logo.png" 
-              alt="Viraliam Logo" 
-              className="w-8 h-8 object-cover rounded-lg border border-white/10 group-hover:scale-105 transition-transform duration-300"
-            />
-            <span className="font-syne font-extrabold text-2xl md:text-3xl tracking-tighter text-white transition-colors duration-300">
-              VIRALIAM
-            </span>
+            <Editable path={['logo', 'src']} label="Logo Image URL" type="url" className="flex items-center">
+              <img 
+                src={content.logo.src} 
+                alt="Viraliam Logo" 
+                className="w-8 h-8 object-cover rounded-lg border border-white/10 group-hover:scale-105 transition-transform duration-300"
+              />
+            </Editable>
+            <Editable path={['logo', 'text']} label="Logo Text" className="flex items-center">
+              <span className="font-syne font-extrabold text-2xl md:text-3xl tracking-tighter text-white transition-colors duration-300">
+                {content.logo.text}
+              </span>
+            </Editable>
           </a>
 
           {/* Desktop Nav Links */}
@@ -129,11 +136,11 @@ export default function Navbar() {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <img 
-                  src="/logo.png" 
+                  src={content.logo.src} 
                   alt="Viraliam Logo" 
                   className="w-7 h-7 object-cover rounded-lg border border-white/10"
                 />
-                <span className="font-syne font-bold text-2xl tracking-tighter text-white">VIRALIAM</span>
+                <span className="font-syne font-bold text-2xl tracking-tighter text-white">{content.logo.text}</span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}

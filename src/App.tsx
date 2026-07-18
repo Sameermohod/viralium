@@ -23,6 +23,10 @@ import FAQ from './components/FAQ';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 
+// Admin System Context & Controls
+import { ContentProvider } from './context/ContentContext';
+import AdminControls from './components/AdminControls';
+
 export default function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -71,7 +75,8 @@ export default function App() {
   const spotlightBg = useMotionTemplate`radial-gradient(circle 800px at ${spotlightXSpring}px ${spotlightYSpring}px, rgba(255, 107, 0, 0.05), transparent 80%)`;
 
   return (
-    <>
+    <ContentProvider>
+      <AdminControls />
       {/* Custom Cursor follower */}
       <CustomCursor />
 
@@ -139,6 +144,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </ContentProvider>
   );
 }

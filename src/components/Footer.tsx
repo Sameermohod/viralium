@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const { content } = useContent();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,12 +40,12 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-2.5 mb-6">
                 <img 
-                  src="/logo.png" 
+                  src={content.logo.src} 
                   alt="Viraliam Logo" 
                   className="w-8 h-8 object-cover rounded-lg border border-white/10"
                 />
                 <span className="font-syne font-extrabold text-2xl tracking-tighter text-white">
-                  VIRALIAM
+                  {content.logo.text}
                 </span>
               </div>
               <p className="text-xs text-neutral-400 font-light leading-relaxed max-w-sm">

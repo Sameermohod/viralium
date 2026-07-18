@@ -3,9 +3,12 @@ import { motion, useInView } from 'framer-motion';
 import { Play } from 'lucide-react';
 import Magnetic from './Magnetic';
 import AnimatedCounter from './AnimatedCounter';
+import { useContent } from '../context/ContentContext';
+import Editable from './Editable';
 
 export default function Hero() {
-  const headline = "We Create Content That Builds Brands.";
+  const { content } = useContent();
+  const headline = content.hero.title;
   const words = headline.split(" ");
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,8 +63,9 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-950 text-white">
       {/* Background Cinematic Video */}
-      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden select-none">
+      <Editable path={['hero', 'videoSrc']} label="Hero Background Video URL" type="url" className="absolute inset-0 w-full h-full z-0 overflow-hidden select-none">
         <video
+          key={content.hero.videoSrc}
           ref={videoRef}
           autoPlay
           muted
@@ -71,7 +75,7 @@ export default function Hero() {
           className="w-full h-full object-cover opacity-35 scale-105"
         >
           <source 
-            src="https://player.vimeo.com/external/403848749.sd.mp4?s=d0db5d51829e5a88c3a164b155f93539e0836528&profile_id=165&oauth2_token_id=57447761" 
+            src={content.hero.videoSrc} 
             type="video/mp4" 
           />
           {/* Fallback pattern */}
@@ -79,47 +83,49 @@ export default function Hero() {
         {/* Dark radial overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-neutral-950" />
         <div className="absolute inset-0 bg-radial-glow" />
-      </div>
+      </Editable>
 
       {/* Main Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-16 flex flex-col justify-between min-h-[85vh] w-full">
         <div className="flex-grow flex flex-col justify-center max-w-4xl">
-          {/* Headline Word Reveal */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="perspective-[1000px]"
-          >
-            <h1 className="text-4xl sm:text-6xl md:text-7.5xl font-extrabold tracking-tighter leading-[1.05] mb-6 flex flex-wrap gap-x-3 gap-y-1">
-              {words.map((word, i) => (
-                <span key={i} className="overflow-hidden inline-block py-2">
-                  <motion.span
-                    variants={wordVariants}
-                    className="inline-block origin-left"
-                  >
-                    {word === "Brands." ? (
-                      <span className="text-[#ff6b00] drop-shadow-[0_0_15px_rgba(255,107,0,0.3)]">{word}</span>
-                    ) : word === "Content" ? (
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#d4af37]">{word}</span>
-                    ) : (
-                      word
-                    )}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-          </motion.div>
+          <Editable path={['hero', 'title']} label="Hero Headline" className="mb-6">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="perspective-[1000px]"
+            >
+              <h1 className="text-4xl sm:text-6xl md:text-7.5xl font-extrabold tracking-tighter leading-[1.05] flex flex-wrap gap-x-3 gap-y-1">
+                {words.map((word, i) => (
+                  <span key={i} className="overflow-hidden inline-block py-2">
+                    <motion.span
+                      variants={wordVariants}
+                      className="inline-block origin-left"
+                    >
+                      {word === "Brands." ? (
+                        <span className="text-[#ff6b00] drop-shadow-[0_0_15px_rgba(255,107,0,0.3)]">{word}</span>
+                      ) : word === "Content" ? (
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#d4af37]">{word}</span>
+                      ) : (
+                        word
+                      )}
+                    </motion.span>
+                  </span>
+                ))}
+              </h1>
+            </motion.div>
+          </Editable>
 
-          {/* Subheading */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
-            className="text-neutral-400 text-base md:text-xl font-light tracking-wide max-w-2xl mb-10 leading-relaxed"
-          >
-            We help businesses dominate social media through premium video production, branding, photography, performance marketing, and creative storytelling.
-          </motion.p>
+          <Editable path={['hero', 'subtitle']} label="Hero Subtitle" type="textarea" className="mb-10">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
+              className="text-neutral-400 text-base md:text-xl font-light tracking-wide max-w-2xl leading-relaxed"
+            >
+              {content.hero.subtitle}
+            </motion.p>
+          </Editable>
 
           {/* CTAs */}
           <motion.div
