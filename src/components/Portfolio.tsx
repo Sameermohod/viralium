@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save } from 'lucide-react';
+import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import type { PortfolioItem } from '../context/ContentContext';
 
@@ -27,6 +27,11 @@ export default function Portfolio() {
   const [formDesc, setFormDesc] = useState('');
   const [formAspect, setFormAspect] = useState('aspect-[16/9]');
 
+  // Upload S3 states
+  const [isUploadingSrc, setIsUploadingSrc] = useState(false);
+  const [isUploadingThumb, setIsUploadingThumb] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+
   const categories = [
     'All',
     'Brand Ads',
@@ -49,6 +54,7 @@ export default function Portfolio() {
     setFormDate('');
     setFormDesc('');
     setFormAspect('aspect-[16/9]');
+    setUploadError('');
     setIsAddingNew(true);
   };
 
@@ -64,6 +70,7 @@ export default function Portfolio() {
     setFormDate(item.date);
     setFormDesc(item.desc);
     setFormAspect(item.aspectClass || 'aspect-[16/9]');
+    setUploadError('');
   };
 
   const handleDeleteClick = (e: React.MouseEvent, id: string) => {
@@ -71,6 +78,42 @@ export default function Portfolio() {
     if (window.confirm('Are you sure you want to delete this project?')) {
       const updated = portfolioItems.filter((item) => item.id !== id);
       updateContent('portfolio', updated);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, targetField: 'src' | 'thumb') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (targetField === 'src') setIsUploadingSrc(true);
+    else setIsUploadingThumb(true);
+    setUploadError('');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'S3 Upload failed');
+      }
+
+      if (targetField === 'src') {
+        setFormSrc(data.url);
+      } else {
+        setFormThumbnail(data.url);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setUploadError(err.message || 'Error uploading file.');
+    } finally {
+      setIsUploadingSrc(false);
+      setIsUploadingThumb(false);
     }
   };
 
@@ -425,6 +468,19 @@ export default function Portfolio() {
                     onChange={(e) => setFormThumbnail(e.target.value)}
                     className="w-full bg-neutral-900 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#ff6b00]"
                   />
+                  <div className="mt-2 p-2 bg-neutral-900/60 rounded-xl border border-white/5 flex items-center justify-between">
+                    <span className="text-[9px] text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                      <UploadIcon size={10} className="text-[#ff6b00]" />
+                      Upload S3
+                    </span>
+                    <input
+                      type="file"
+                      onChange={(e) => handleFileUpload(e, 'thumb')}
+                      disabled={isUploadingThumb}
+                      className="text-[9px] text-neutral-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-neutral-800 file:text-white hover:file:bg-neutral-700 disabled:opacity-50 cursor-pointer"
+                    />
+                    {isUploadingThumb && <span className="text-[10px] text-amber-500 animate-pulse">Uploading...</span>}
+                  </div>
                 </div>
               </div>
 
@@ -438,6 +494,20 @@ export default function Portfolio() {
                   onChange={(e) => setFormSrc(e.target.value)}
                   className="w-full bg-neutral-900 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#ff6b00]"
                 />
+                <div className="mt-2 p-3 bg-neutral-900/60 rounded-xl border border-white/5 flex items-center justify-between">
+                  <span className="text-[9px] text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                    <UploadIcon size={10} className="text-[#ff6b00]" />
+                    Upload S3 Video / Image
+                  </span>
+                  <input
+                    type="file"
+                    onChange={(e) => handleFileUpload(e, 'src')}
+                    disabled={isUploadingSrc}
+                    className="text-[9px] text-neutral-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-neutral-800 file:text-white hover:file:bg-neutral-700 disabled:opacity-50 cursor-pointer"
+                  />
+                  {isUploadingSrc && <span className="text-[10px] text-amber-500 animate-pulse">Uploading...</span>}
+                </div>
+                {uploadError && <p className="text-xs text-red-500 mt-1.5">{uploadError}</p>}
               </div>
 
               <div>
@@ -464,7 +534,8 @@ export default function Portfolio() {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer"
+                  disabled={isUploadingSrc || isUploadingThumb}
+                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Project

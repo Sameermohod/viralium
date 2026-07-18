@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
-import { Edit2, Save, X } from 'lucide-react';
+import { Edit2, Save, X, Upload as UploadIcon } from 'lucide-react';
 
 interface EditableProps {
   children: React.ReactNode;
@@ -14,12 +14,15 @@ export default function Editable({ children, path, label, type = 'text', classNa
   const { isAdminMode, content, updateContent } = useContent();
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  
+  // Upload states
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   if (!isAdminMode) {
     return <div className={className}>{children}</div>;
   }
 
-  // Get current value from path
   const getCurrentValue = () => {
     let current: any = content;
     for (const key of path) {
@@ -35,6 +38,7 @@ export default function Editable({ children, path, label, type = 'text', classNa
   const handleStartEdit = (e: React.MouseEvent) => {
     e.stopPropagation();
     setInputValue(getCurrentValue());
+    setUploadError('');
     setIsEditing(true);
   };
 
@@ -42,6 +46,36 @@ export default function Editable({ children, path, label, type = 'text', classNa
     e.preventDefault();
     updateContent(path, inputValue);
     setIsEditing(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setUploadError('');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to upload file to S3');
+      }
+
+      setInputValue(data.url);
+    } catch (err: any) {
+      console.error(err);
+      setUploadError(err.message || 'Error uploading file.');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -79,7 +113,7 @@ export default function Editable({ children, path, label, type = 'text', classNa
             <form onSubmit={handleSave}>
               <div className="mb-5">
                 <label className="block text-xs uppercase tracking-wider text-neutral-400 font-bold mb-2">
-                  Content Field
+                  Content Value (URL or Text)
                 </label>
                 {type === 'textarea' ? (
                   <textarea
@@ -98,9 +132,32 @@ export default function Editable({ children, path, label, type = 'text', classNa
                     autoFocus
                   />
                 )}
+                
+                {/* Upload to S3 Helper */}
                 {type === 'url' && (
-                  <p className="text-[10px] text-neutral-500 mt-1.5">
-                    Provide a valid image or video URL (e.g. Unsplash image link or Vimeo MP4 video stream link).
+                  <div className="mt-4 p-4 bg-neutral-900/60 rounded-xl border border-white/5 flex flex-col gap-2">
+                    <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                      <UploadIcon size={12} className="text-[#ff6b00]" />
+                      Upload direct to AWS S3
+                    </span>
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      disabled={isUploading}
+                      className="text-xs text-neutral-400 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-neutral-800 file:text-white hover:file:bg-neutral-700 file:cursor-pointer disabled:opacity-50"
+                    />
+                    {isUploading && (
+                      <span className="text-xs text-amber-500 animate-pulse block mt-1">Uploading file to S3 bucket...</span>
+                    )}
+                    {uploadError && (
+                      <span className="text-xs text-red-500 block mt-1">{uploadError}</span>
+                    )}
+                  </div>
+                )}
+
+                {type === 'url' && !isUploading && !uploadError && (
+                  <p className="text-[10px] text-neutral-500 mt-2">
+                    Provide a valid URL or click the file picker above to upload directly.
                   </p>
                 )}
               </div>
@@ -115,7 +172,8 @@ export default function Editable({ children, path, label, type = 'text', classNa
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_15px_rgba(255,107,0,0.3)] transition-all cursor-pointer"
+                  disabled={isUploading}
+                  className="flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_15px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Changes

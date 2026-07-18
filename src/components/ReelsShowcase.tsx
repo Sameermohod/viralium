@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ChevronUp, ChevronDown, Play, MessageCircle, Heart, Share2, Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { ChevronUp, ChevronDown, Play, MessageCircle, Heart, Share2, Plus, Edit, Trash2, Save, X, Upload as UploadIcon } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import type { ReelItem } from '../context/ContentContext';
 
@@ -21,6 +21,10 @@ export default function ReelsShowcase() {
   const [formDesc, setFormDesc] = useState('');
   const [formSound, setFormSound] = useState('');
   const [formSrc, setFormSrc] = useState('');
+
+  // Upload S3 state
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   useEffect(() => {
     if (videoRef.current) {
@@ -48,6 +52,7 @@ export default function ReelsShowcase() {
     setFormDesc('');
     setFormSound('Original Audio - Viraliam');
     setFormSrc('');
+    setUploadError('');
     setIsAddingNew(true);
   };
 
@@ -58,6 +63,7 @@ export default function ReelsShowcase() {
     setFormDesc(reel.description);
     setFormSound(reel.sound);
     setFormSrc(reel.videoSrc);
+    setUploadError('');
   };
 
   const handleDeleteClick = (id: number) => {
@@ -69,6 +75,36 @@ export default function ReelsShowcase() {
       const updated = reels.filter((r) => r.id !== id);
       updateContent('reels', updated);
       setActiveReelIdx(0);
+    }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setUploadError('');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'S3 Upload failed');
+      }
+
+      setFormSrc(data.url);
+    } catch (err: any) {
+      console.error(err);
+      setUploadError(err.message || 'Error uploading file.');
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -353,6 +389,22 @@ export default function ReelsShowcase() {
                   onChange={(e) => setFormSrc(e.target.value)}
                   className="w-full bg-neutral-900 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#ff6b00]"
                 />
+                
+                {/* Upload to S3 */}
+                <div className="mt-2 p-3 bg-neutral-900/60 rounded-xl border border-white/5 flex items-center justify-between">
+                  <span className="text-[9px] text-neutral-400 uppercase tracking-wider flex items-center gap-1">
+                    <UploadIcon size={10} className="text-[#ff6b00]" />
+                    Upload MP4 to S3
+                  </span>
+                  <input
+                    type="file"
+                    onChange={handleFileUpload}
+                    disabled={isUploading}
+                    className="text-[9px] text-neutral-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-neutral-800 file:text-white hover:file:bg-neutral-700 disabled:opacity-50 cursor-pointer"
+                  />
+                  {isUploading && <span className="text-[10px] text-amber-500 animate-pulse">Uploading...</span>}
+                </div>
+                {uploadError && <p className="text-xs text-red-500 mt-1.5">{uploadError}</p>}
               </div>
 
               <div>
@@ -379,7 +431,8 @@ export default function ReelsShowcase() {
                 </button>
                 <button
                   type="submit"
-                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer"
+                  disabled={isUploading}
+                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Reel
