@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Phone, Send, ArrowUpRight } from 'lucide-react';
+import { MessageSquare, Phone, Send, ArrowUpRight, Loader2, AlertCircle } from 'lucide-react';
 import Magnetic from './Magnetic';
 
 export default function ContactForm() {
@@ -14,6 +14,8 @@ export default function ContactForm() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
 
@@ -51,12 +53,55 @@ export default function ContactForm() {
     setFormData(prev => ({ ...prev, budget }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    const web3AccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    try {
+      if (web3AccessKey && web3AccessKey.trim() !== '') {
+        // Send via Web3Forms API (Works on Vercel + Local, instant delivery to inbox)
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: web3AccessKey,
+            subject: `🔥 New Lead Inquiry from ${formData.name} - Viraliam`,
+            from_name: 'Viraliam Website Lead',
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            business_name: formData.businessName || 'N/A',
+            service_requested: formData.service,
+            estimated_budget: formData.budget,
+            message: formData.message
+          })
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Failed sending enquiry email.');
+        }
+      } else {
+        // Send via local Vite dev server /api/contact middleware
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed sending enquiry email.');
+        }
+      }
+
+      setSubmitted(true);
       setFormData({
         name: '',
         businessName: '',
@@ -66,7 +111,16 @@ export default function ContactForm() {
         budget: '₹1L - ₹5L',
         message: ''
       });
-    }, 4000);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 6000);
+    } catch (err: any) {
+      console.error('Submission error:', err);
+      setSubmitError(err.message || 'Something went wrong. Please try again or WhatsApp us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -121,64 +175,46 @@ export default function ContactForm() {
                 href="https://wa.me/917264021161?text=Hi%20Viraliam,%20I'd%20like%20to%20book%20a%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/20 hover:border-emerald-500/50 rounded-2xl p-4 transition-all duration-300 group"
+                className="p-5 bg-neutral-900/60 border border-white/5 hover:border-[#ff6b00]/50 rounded-2xl flex items-center justify-between group transition-all duration-300"
               >
-                <div className="p-3 bg-emerald-500 text-white rounded-xl">
-                  <MessageSquare size={20} className="fill-current" />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <MessageSquare size={18} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Direct WhatsApp Consultation</h4>
+                    <p className="text-xs text-neutral-400 font-light mt-0.5">+91 72640 21161</p>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">Chat on WhatsApp</span>
-                  <span className="text-sm font-semibold text-white flex items-center gap-1">
-                    +91 72640 21161 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
-                </div>
+                <ArrowUpRight size={18} className="text-neutral-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
               </a>
 
-              {/* Call Widget */}
+              {/* Direct Call Widget */}
               <a
                 href="tel:+917264021161"
-                className="flex items-center gap-4 bg-neutral-900/40 hover:bg-neutral-900 border border-white/5 hover:border-white/20 rounded-2xl p-4 transition-all duration-300 group"
+                className="p-5 bg-neutral-900/60 border border-white/5 hover:border-[#ff6b00]/50 rounded-2xl flex items-center justify-between group transition-all duration-300"
               >
-                <div className="p-3 bg-[#ff6b00] text-white rounded-xl shadow-lg shadow-brand-orange/20">
-                  <Phone size={20} className="fill-current" />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#ff6b00]/10 text-[#ff6b00] flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Speak With Our Directors</h4>
+                    <p className="text-xs text-neutral-400 font-light mt-0.5">Mon - Sat (10:00 AM - 7:00 PM IST)</p>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <span className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider block">Direct Studio Line</span>
-                  <span className="text-sm font-semibold text-white flex items-center gap-1">
-                    +91 72640 21161 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
-                </div>
-              </a>
-            </div>
-
-            {/* Social icons */}
-            <div className="flex gap-4">
-              <a 
-                href="https://www.instagram.com/viraliam_?igsh=cXdvam8zdDNydnV0" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" 
-                aria-label="Instagram"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-              </a>
-              <a 
-                href="https://www.linkedin.com/company/viraliam/" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full text-white transition-all hover:-translate-y-1" 
-                aria-label="LinkedIn"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                <ArrowUpRight size={18} className="text-neutral-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
               </a>
             </div>
           </div>
 
-          {/* Right Panel: Interactive Form */}
+          {/* Right Panel: Project Brief Form */}
           <div className="lg:col-span-7">
-            <div className="glassmorphism rounded-3xl p-8 md:p-10 border border-white/5 relative">
+            <div className="bg-neutral-900/40 border border-white/5 p-8 md:p-12 rounded-3xl relative overflow-hidden backdrop-blur-md">
+              
+              {/* Success Notification Modal */}
               <AnimatePresence>
-                {submitted ? (
+                {submitted && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -190,10 +226,10 @@ export default function ContactForm() {
                     </div>
                     <h3 className="text-2xl font-bold font-syne text-white mb-2">Proposal Received!</h3>
                     <p className="text-sm text-neutral-400 font-light max-w-sm leading-relaxed">
-                      Our directors will review your brand details and reach back within 12 hours with a calendar invite.
+                      An email notification has been dispatched to our team. We will review your brand details and get back to you within 12 hours.
                     </p>
                   </motion.div>
-                ) : null}
+                )}
               </AnimatePresence>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -209,7 +245,7 @@ export default function ContactForm() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. John Doe"
-                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors"
+                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors text-white"
                     />
                   </div>
                   {/* Business Name */}
@@ -222,7 +258,7 @@ export default function ContactForm() {
                       value={formData.businessName}
                       onChange={handleChange}
                       placeholder="e.g. Aura Luxury"
-                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors"
+                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors text-white"
                     />
                   </div>
                 </div>
@@ -239,7 +275,7 @@ export default function ContactForm() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="e.g. john@brand.com"
-                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors"
+                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors text-white"
                     />
                   </div>
                   {/* Phone */}
@@ -253,7 +289,7 @@ export default function ContactForm() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="e.g. +91 99999 99999"
-                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors"
+                      className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors text-white"
                     />
                   </div>
                 </div>
@@ -311,17 +347,35 @@ export default function ContactForm() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Describe your brand, project timeline, and visual goals..."
-                    className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors resize-none"
+                    className="bg-neutral-900/60 border border-white/5 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors resize-none text-white leading-relaxed"
                   />
                 </div>
+
+                {/* Submit error display */}
+                {submitError && (
+                  <div className="p-4 bg-red-950/60 border border-red-500/30 rounded-xl text-red-400 text-xs flex items-center gap-2">
+                    <AlertCircle size={16} className="shrink-0" />
+                    <span>{submitError}</span>
+                  </div>
+                )}
 
                 {/* Submit button */}
                 <Magnetic strength={0.15} range={30}>
                   <button
                     type="submit"
-                    className="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-4 rounded-xl hover:bg-neutral-100 transition-colors shadow-lg flex items-center justify-center gap-2 group cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full bg-white text-black font-bold text-xs uppercase tracking-widest py-4 rounded-xl hover:bg-neutral-100 transition-colors shadow-lg flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50"
                   >
-                    Submit Proposal <Send size={12} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin text-black" />
+                        Sending Proposal...
+                      </>
+                    ) : (
+                      <>
+                        Submit Proposal <Send size={12} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                      </>
+                    )}
                   </button>
                 </Magnetic>
               </form>
