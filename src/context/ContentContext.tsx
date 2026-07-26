@@ -179,9 +179,18 @@ const defaultContent: ContentData = {
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isAdminMode, setIsAdminMode] = useState<boolean>(() => {
+    return sessionStorage.getItem('viraliam_admin_session') === 'active' ||
+           window.location.hash === '#admin' ||
+           window.location.search.includes('admin=true');
+  });
+
   const [content, setContent] = useState<ContentData>(() => {
     const saved = localStorage.getItem('viraliam_content');
-    if (saved) {
+    const isAdminActive = sessionStorage.getItem('viraliam_admin_session') === 'active' ||
+                          window.location.hash === '#admin' ||
+                          window.location.search.includes('admin=true');
+    if (isAdminActive && saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {
@@ -191,15 +200,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     return defaultContent;
   });
 
-  const [isAdminMode, setIsAdminMode] = useState<boolean>(() => {
-    return sessionStorage.getItem('viraliam_admin_session') === 'active' ||
-           window.location.hash === '#admin' ||
-           window.location.search.includes('admin=true');
-  });
-
   useEffect(() => {
-    localStorage.setItem('viraliam_content', JSON.stringify(content));
-  }, [content]);
+    if (isAdminMode) {
+      localStorage.setItem('viraliam_content', JSON.stringify(content));
+    }
+  }, [content, isAdminMode]);
 
   // Sync hash/search query changes
   useEffect(() => {
@@ -207,6 +212,12 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       if (window.location.hash === '#admin' || window.location.search.includes('admin=true')) {
         setIsAdminMode(true);
         sessionStorage.setItem('viraliam_admin_session', 'active');
+        const saved = localStorage.getItem('viraliam_content');
+        if (saved) {
+          try {
+            setContent(JSON.parse(saved));
+          } catch (e) {}
+        }
       }
     };
     window.addEventListener('hashchange', handleUrlCheck);
@@ -236,6 +247,12 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (password === 'viraliam2026') {
       setIsAdminMode(true);
       sessionStorage.setItem('viraliam_admin_session', 'active');
+      const saved = localStorage.getItem('viraliam_content');
+      if (saved) {
+        try {
+          setContent(JSON.parse(saved));
+        } catch (e) {}
+      }
       return true;
     }
     return false;
@@ -244,6 +261,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const logout = () => {
     setIsAdminMode(false);
     sessionStorage.removeItem('viraliam_admin_session');
+    localStorage.removeItem('viraliam_content');
+    setContent(defaultContent);
     // Clear URL hash
     if (window.location.hash === '#admin') {
       window.location.hash = '';
