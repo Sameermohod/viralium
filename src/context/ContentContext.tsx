@@ -73,7 +73,7 @@ const defaultContent: ContentData = {
       client: 'Prg Cars',
       date: 'Jul 2026',
       desc: 'Car Delevery ',
-      aspectClass: 'aspect-[16/9]'
+      aspectClass: 'aspect-[3/4]'
     },
     {
       id: '1',
