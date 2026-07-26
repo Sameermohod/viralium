@@ -8,15 +8,38 @@ import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
+import { exec } from 'child_process'
+import util from 'util'
+import { createRequire } from 'module'
+
+const require = createRequire(import.meta.url);
+const ffmpegPath = require('ffmpeg-static');
+const execPromise = util.promisify(exec);
 
 // Load environment variables
 dotenv.config()
+
+async function getVideoDuration(filePath: string): Promise<number> {
+  try {
+    const { stderr } = await execPromise(`"${ffmpegPath}" -i "${filePath}"`).catch((err: any) => err);
+    const match = stderr.match(/Duration:\s*(\d+):(\d+):(\d+\.\d+)/);
+    if (match) {
+      const hours = parseInt(match[1], 10);
+      const minutes = parseInt(match[2], 10);
+      const seconds = parseFloat(match[3]);
+      return hours * 3600 + minutes * 60 + seconds;
+    }
+  } catch (e) {
+    console.error('Error parsing video duration:', e);
+  }
+  return 0;
+}
 
 function devApiMiddleware() {
   return {
     name: 'dev-api-middleware',
     configureServer(server: any) {
-      // S3 File Upload Handler
+      // S3 File Upload Handler with Video Compression
       server.middlewares.use('/api/upload', (req: any, res: any) => {
         if (req.method !== 'POST') {
           res.statusCode = 405;
@@ -60,22 +83,90 @@ function devApiMiddleware() {
           }
 
           try {
-            const fileStream = fs.createReadStream(file.path);
+            let uploadFilePath = file.path;
+            const isVideo = file.headers['content-type']?.startsWith('video/') || 
+                            /\.(mp4|mov|avi|mkv|webm)$/i.test(file.originalFilename);
+
+            if (isVideo) {
+              const originalSize = fs.statSync(file.path).size / (1024 * 1024);
+              console.log(`🎬 Video detected: ${file.originalFilename} (${originalSize.toFixed(2)} MB)`);
+              
+              const duration = await getVideoDuration(file.path);
+              console.log(`   Video duration: ${duration.toFixed(2)}s`);
+              
+              const compressedPath = `${file.path}_compressed.mp4`;
+              let scaleFilter = '';
+              let videoBitrate = 2000000; // 2 Mbps default
+              
+              if (duration > 0) {
+                // Target: 9.5MB (9.5 * 1024 * 1024 * 8 = 79,691,776 bits)
+                const totalTargetBitrate = Math.floor(79691776 / duration);
+                videoBitrate = totalTargetBitrate - 128000; // Subtract 128 kbps audio
+                
+                if (videoBitrate > 3000000) {
+                  videoBitrate = 3000000;
+                  scaleFilter = '-vf "scale=-2:min(1080\\,ih)"';
+                } else if (videoBitrate < 300000) {
+                  videoBitrate = 300000;
+                  scaleFilter = '-vf "scale=-2:min(480\\,ih)"';
+                } else if (videoBitrate < 800000) {
+                  scaleFilter = '-vf "scale=-2:min(720\\,ih)"';
+                } else {
+                  scaleFilter = '-vf "scale=-2:min(1080\\,ih)"';
+                }
+              } else {
+                scaleFilter = '-vf "scale=-2:min(1080\\,ih)"';
+              }
+              
+              let ffmpegCmd = `"${ffmpegPath}" -y -i "${file.path}"`;
+              
+              if (originalSize <= 9.8) {
+                // Already under 10MB, just transcode to web-optimized MP4 with good quality
+                console.log(`   File is already under 10MB. Transcoding for web compatibility...`);
+                ffmpegCmd += ` -c:v libx264 -preset medium -crf 24 ${scaleFilter}`;
+              } else {
+                // Needs compression to hit under 10MB
+                console.log(`   Compressing to fit under 10MB (Target bitrate: ${(videoBitrate / 1000).toFixed(0)} kbps)...`);
+                ffmpegCmd += ` -c:v libx264 -preset medium -b:v ${videoBitrate} -maxrate ${Math.floor(videoBitrate * 1.5)} -bufsize ${videoBitrate * 2} ${scaleFilter}`;
+              }
+              
+              ffmpegCmd += ` -c:a aac -b:a 128k -movflags +faststart "${compressedPath}"`;
+              
+              console.log(`   Running ffmpeg command...`);
+              await execPromise(ffmpegCmd);
+              
+              const compressedSize = fs.statSync(compressedPath).size / (1024 * 1024);
+              console.log(`   Compression complete: ${originalSize.toFixed(2)} MB -> ${compressedSize.toFixed(2)} MB`);
+              
+              uploadFilePath = compressedPath;
+            }
+
+            const fileStream = fs.createReadStream(uploadFilePath);
             const fileName = `${Date.now()}_${path.basename(file.originalFilename)}`;
             
             const upload = new Upload({
               client: s3,
               params: {
                 Bucket: bucket,
-                Key: fileName,
+                Key: isVideo ? `${path.basename(fileName, path.extname(fileName))}.mp4` : fileName,
                 Body: fileStream,
-                ContentType: file.headers['content-type']
+                ContentType: isVideo ? 'video/mp4' : file.headers['content-type']
               }
             });
 
             await upload.done();
             
-            const fileUrl = `https://${bucket}.s3.${region}.amazonaws.com/${fileName}`;
+            // Clean up temp files
+            try {
+              fs.unlinkSync(file.path);
+              if (uploadFilePath !== file.path) {
+                fs.unlinkSync(uploadFilePath);
+              }
+            } catch (cleanupError) {
+              console.error('Error cleaning up temp files:', cleanupError);
+            }
+
+            const fileUrl = `https://${bucket}.s3.${region}.amazonaws.com/${isVideo ? `${path.basename(fileName, path.extname(fileName))}.mp4` : fileName}`;
             
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ url: fileUrl }));
