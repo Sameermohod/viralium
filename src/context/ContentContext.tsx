@@ -74,12 +74,14 @@ const defaultContent: ContentData = {
       client: 'Prg Cars',
       date: 'Jul 2026',
       desc: 'Car Delevery ',
+      playAudio: true,
       aspectClass: 'aspect-[3/4]'
     },
     {
-      id: '1785072130459',
+      id: '1785072130450',
       title: 'Car Delevery ',
       category: 'Reels',
+      playAudio: true,
       type: 'video',
       src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785075819520_05.mp4',
       thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072929844_Screenshot 2026-07-26 190448.png',
@@ -293,7 +295,7 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   const resetToDefaults = () => {
-    if (window.confirm('Are you sure you want to reset all edits to default values?')) {
+    if (window.confirm('Are you sure you want to discard your browser local cache edits and sync the latest data configuration from the source code?')) {
       setContent(defaultContent);
       localStorage.removeItem('viraliam_content');
     }

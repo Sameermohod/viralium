@@ -70,10 +70,11 @@ export default function AdminControls() {
             </button>
             <button
               onClick={resetToDefaults}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-900 hover:bg-red-500/20 border border-white/10 text-xs font-semibold rounded-lg transition-colors text-neutral-400 hover:text-red-400 cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-900 hover:bg-amber-500/20 border border-white/10 text-xs font-semibold rounded-lg transition-colors text-neutral-400 hover:text-amber-400 cursor-pointer"
+              title="Discard local edits and load fresh data configuration from code database"
             >
               <RotateCcw size={13} />
-              Reset Defaults
+              Sync Codebase Data
             </button>
             <button
               onClick={logout}
