@@ -68,8 +68,8 @@ const defaultContent: ContentData = {
       title: 'Car Delevery ',
       category: 'Reels',
       type: 'video',
-      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072929844_Screenshot 2026-07-26 190448.png',
-      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072068161_0724(1).mp4',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072068161_0724(1).mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072929844_Screenshot 2026-07-26 190448.png',
       client: 'Prg Cars',
       date: 'Jul 2026',
       desc: 'Car Delevery ',
@@ -192,8 +192,8 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   });
 
   const [isAdminMode, setIsAdminMode] = useState<boolean>(() => {
-    return sessionStorage.getItem('viraliam_admin_session') === 'active' || 
-           window.location.hash === '#admin' || 
+    return sessionStorage.getItem('viraliam_admin_session') === 'active' ||
+           window.location.hash === '#admin' ||
            window.location.search.includes('admin=true');
   });
 
