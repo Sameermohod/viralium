@@ -64,6 +64,18 @@ const defaultContent: ContentData = {
   },
   portfolio: [
     {
+      id: '1785072130459',
+      title: 'Car Delevery ',
+      category: 'Reels',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072068161_0724(1).mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072068161_0724(1).mp4',
+      client: 'Prg Cars',
+      date: 'Jul 2026',
+      desc: 'Car Delevery ',
+      aspectClass: 'aspect-[16/9]'
+    },
+    {
       id: '1',
       title: 'Aura Luxury Perfume',
       category: 'Product Videos',

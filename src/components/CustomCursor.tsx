@@ -5,7 +5,6 @@ export default function CustomCursor() {
   const [cursorType, setCursorType] = useState<'default' | 'hover' | 'play' | 'view' | 'drag'>('default');
   const [isVisible, setIsVisible] = useState(false);
   const [cursorText, setCursorText] = useState('');
-
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -30,7 +29,7 @@ export default function CustomCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
+
       // Check nearest interactive element (up to 3 levels up)
       let el: HTMLElement | null = target;
       let type: string | null = null;
