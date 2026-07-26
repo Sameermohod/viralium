@@ -27,6 +27,7 @@ export default function Portfolio() {
   const [formDate, setFormDate] = useState('');
   const [formDesc, setFormDesc] = useState('');
   const [formAspect, setFormAspect] = useState('aspect-[16/9]');
+  const [formPlayAudio, setFormPlayAudio] = useState(false);
 
   // Upload S3 states
   const [isUploadingSrc, setIsUploadingSrc] = useState(false);
@@ -55,6 +56,7 @@ export default function Portfolio() {
     setFormDate('');
     setFormDesc('');
     setFormAspect('aspect-[16/9]');
+    setFormPlayAudio(false);
     setUploadError('');
     setIsAddingNew(true);
   };
@@ -71,6 +73,7 @@ export default function Portfolio() {
     setFormDate(item.date);
     setFormDesc(item.desc);
     setFormAspect(item.aspectClass || 'aspect-[16/9]');
+    setFormPlayAudio(item.playAudio || false);
     setUploadError('');
   };
 
@@ -130,7 +133,8 @@ export default function Portfolio() {
       client: formClient,
       date: formDate,
       desc: formDesc,
-      aspectClass: formAspect
+      aspectClass: formAspect,
+      playAudio: formPlayAudio
     };
 
     let updatedList;
@@ -248,7 +252,7 @@ export default function Portfolio() {
                   {item.type === 'video' && hoveredId === item.id ? (
                     <video
                       autoPlay
-                      muted
+                      muted={!item.playAudio}
                       loop
                       playsInline
                       className="absolute inset-0 w-full h-full object-cover"
@@ -323,6 +327,7 @@ export default function Portfolio() {
                     autoPlay
                     controls
                     playsInline
+                    muted={selectedItem.playAudio === false}
                     className="w-full h-full object-contain"
                   >
                     <source src={selectedItem.src} type="video/mp4" />
@@ -462,6 +467,20 @@ export default function Portfolio() {
                     <option value="video">Autoplay Video Snippet</option>
                     <option value="image">Static Image Showcase</option>
                   </select>
+                  {formType === 'video' && (
+                    <div className="flex items-center gap-2 mt-3.5 p-1 bg-neutral-900/80 rounded-xl border border-white/5">
+                      <input
+                        type="checkbox"
+                        id="formPlayAudio"
+                        checked={formPlayAudio}
+                        onChange={(e) => setFormPlayAudio(e.target.checked)}
+                        className="rounded border-white/10 bg-neutral-950 text-[#ff6b00] focus:ring-[#ff6b00] h-4 w-4 accent-[#ff6b00]"
+                      />
+                      <label htmlFor="formPlayAudio" className="text-[10px] uppercase tracking-wider text-neutral-300 font-bold cursor-pointer select-none">
+                        Play Audio on Hover Preview
+                      </label>
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className="block text-[10px] uppercase tracking-wider text-neutral-400 font-bold mb-1.5">Thumbnail Image URL</label>

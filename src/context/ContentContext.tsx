@@ -11,6 +11,7 @@ export interface PortfolioItem {
   date: string;
   desc: string;
   aspectClass?: string;
+  playAudio?: boolean;
 }
 
 export interface ReelItem {
@@ -68,7 +69,19 @@ const defaultContent: ContentData = {
       title: 'Car Delevery ',
       category: 'Reels',
       type: 'video',
-      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072068161_0724(1).mp4',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785075974483_0724(1).mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072929844_Screenshot 2026-07-26 190448.png',
+      client: 'Prg Cars',
+      date: 'Jul 2026',
+      desc: 'Car Delevery ',
+      aspectClass: 'aspect-[3/4]'
+    },
+    {
+      id: '1785072130459',
+      title: 'Car Delevery ',
+      category: 'Reels',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785075819520_05.mp4',
       thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785072929844_Screenshot 2026-07-26 190448.png',
       client: 'Prg Cars',
       date: 'Jul 2026',
