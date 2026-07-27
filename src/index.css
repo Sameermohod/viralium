@@ -139,7 +139,7 @@
 
 /* Base resets & customization */
 html {
-  scroll-behavior: initial; /* Lenis handles smooth scrolling */
+  scroll-behavior: smooth;
   overflow-x: hidden;
   background-color: var(--color-luxury-black);
   color: var(--color-luxury-light);
@@ -158,10 +158,6 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
-  /* Hide standard cursor on large screen devices with cursor capability */
-  @media (pointer: fine) {
-    cursor: none;
-  }
 }
 
 /* Remove cursor:none for specific interactive elements to act as fallback */
