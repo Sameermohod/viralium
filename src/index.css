@@ -421,3 +421,8 @@ html.lenis, html.lenis body {
   border-top: 1px solid rgba(17, 24, 39, 0.06) !important;
 }
 
+/* Background video opacity reduction in light mode */
+.light-mode video {
+  opacity: 0.08 !important;
+}
+

@@ -105,7 +105,7 @@ export default function Hero() {
                       {word === "Brands." ? (
                         <span className="text-[#ff6b00] drop-shadow-[0_0_15px_rgba(255,107,0,0.3)]">{word}</span>
                       ) : word === "Content" ? (
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#d4af37]">{word}</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-luxury-light)] to-[#d4af37]">{word}</span>
                       ) : (
                         word
                       )}
