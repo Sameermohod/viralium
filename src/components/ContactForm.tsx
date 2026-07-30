@@ -88,16 +88,22 @@ export default function ContactForm() {
           throw new Error(result.message || 'Failed sending enquiry email.');
         }
       } else {
-        // Send via local Vite dev server /api/contact middleware
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (isLocal) {
+          // Send via local Vite dev server /api/contact middleware
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
 
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.error || 'Failed sending enquiry email.');
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.error || 'Failed sending enquiry email.');
+          }
+        } else {
+          // Production environment with missing key configuration
+          throw new Error('Live email notification key is missing. Please add VITE_WEB3FORMS_ACCESS_KEY to your Vercel Environment Variables.');
         }
       }
 
