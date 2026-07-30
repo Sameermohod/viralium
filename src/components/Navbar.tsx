@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Sun, Moon } from 'lucide-react';
 import Magnetic from './Magnetic';
 import { useContent } from '../context/ContentContext';
 import Editable from './Editable';
@@ -8,7 +8,7 @@ import Editable from './Editable';
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { content } = useContent();
+  const { content, theme, toggleTheme } = useContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,6 +90,15 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#ff6b00] group-hover:w-full transition-all duration-300" />
               </a>
             ))}
+
+            {/* Desktop Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="text-neutral-400 hover:text-white transition-colors duration-300 p-1 cursor-pointer flex items-center justify-center hover:scale-115 transition-transform"
+              title={theme === 'light' ? "Switch to Dark Mode" : "Switch to Light Mode"}
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
           </div>
 
           {/* Desktop CTA */}
@@ -112,14 +121,23 @@ export default function Navbar() {
             </Magnetic>
           </div>
 
-          {/* Mobile Hamburger toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden p-2 text-white hover:text-[#ff6b00] transition-colors"
-            aria-label="Toggle Menu"
-          >
-            <Menu size={24} />
-          </button>
+          {/* Mobile Actions (Toggle Theme + Hamburger menu) */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2 text-white hover:text-[#ff6b00] transition-colors cursor-pointer flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="Toggle Theme"
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2 text-white hover:text-[#ff6b00] transition-colors"
+              aria-label="Toggle Menu"
+            >
+              <Menu size={24} />
+            </button>
+          </div>
         </div>
       </motion.nav>
 
@@ -142,12 +160,22 @@ export default function Navbar() {
                 />
                 <span className="font-syne font-bold text-2xl tracking-tighter text-white">{content.logo.text}</span>
               </div>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 text-white hover:text-[#ff6b00] transition-colors"
-              >
-                <X size={24} />
-              </button>
+              <div className="flex items-center gap-4">
+                {/* Mobile Drawer Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 text-white hover:text-[#ff6b00] transition-colors cursor-pointer"
+                  aria-label="Toggle Theme"
+                >
+                  {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                </button>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 text-white hover:text-[#ff6b00] transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
             </div>
 
             {/* Mobile Nav Links */}

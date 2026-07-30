@@ -48,6 +48,8 @@ interface ContentContextType {
   logout: () => void;
   downloadContentJSON: () => void;
   resetToDefaults: () => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const defaultContent: ContentData = {
@@ -221,6 +223,25 @@ const defaultContent: ContentData = {
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('viraliam_theme');
+    return (saved as 'light' | 'dark') || 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light-mode');
+    } else {
+      root.classList.remove('light-mode');
+    }
+    localStorage.setItem('viraliam_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   const [isAdminMode, setIsAdminMode] = useState<boolean>(() => {
     return sessionStorage.getItem('viraliam_admin_session') === 'active' ||
            window.location.hash === '#admin' ||
@@ -336,7 +357,9 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       login,
       logout,
       downloadContentJSON,
-      resetToDefaults
+      resetToDefaults,
+      theme,
+      toggleTheme
     }}>
       {children}
     </ContentContext.Provider>
