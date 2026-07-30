@@ -65,6 +65,32 @@ const defaultContent: ContentData = {
   },
   portfolio: [
     {
+      id: '1785072130159',
+      title: 'Car Delevery ',
+      category: 'Reels',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785405366523_reel_bb115adc.mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785405320271_New%20Project%203%20[B9F1BD2].png',
+      client: 'Unknown',
+      date: 'Jul 2026',
+      desc: 'Car Delevery ',
+      playAudio: true,
+      aspectClass: 'aspect-[3/4]'
+    },
+    {
+      id: '1785072132459',
+      title: 'Car Delevery ',
+      category: 'Reels',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785405234340_reel_3cfed5cf.mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785405835753_New%20Project%203%20[5F18232].png',
+      client: 'Unknown',
+      date: 'Jul 2026',
+      desc: 'Car Delevery ',
+      playAudio: true,
+      aspectClass: 'aspect-[3/4]'
+    },
+    {
       id: '1785072130459',
       title: 'Car Delevery ',
       category: 'Reels',
@@ -150,18 +176,18 @@ const defaultContent: ContentData = {
       desc: 'A futuristic cyber-rap music video featuring rapid transition editing, glitch effects, neon lasers, and high-contrast grading.',
       aspectClass: 'aspect-[16/9]'
     },
-    {
-      id: '6',
-      title: 'Infinite Urban Reel',
-      category: 'Reels',
-      type: 'video',
-      src: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c054ba208d90d965d50972413e9a03b3&profile_id=139&oauth2_token_id=57447761',
-      thumbnail: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&w=600&q=80',
-      client: 'Self Project',
-      date: 'February 2026',
-      desc: 'Fast-paced urban cinematography showcasing street life, skateboarding, and transitions suited for reels and shorts.',
-      aspectClass: 'aspect-[3/4]'
-    }
+    // {
+    //   id: '6',
+    //   title: 'Infinite Urban Reel',
+    //   category: 'Reels',
+    //   type: 'video',
+    //   src: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c054ba208d90d965d50972413e9a03b3&profile_id=139&oauth2_token_id=57447761',
+    //   thumbnail: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&w=600&q=80',
+    //   client: 'Self Project',
+    //   date: 'February 2026',
+    //   desc: 'Fast-paced urban cinematography showcasing street life, skateboarding, and transitions suited for reels and shorts.',
+    //   aspectClass: 'aspect-[3/4]'
+    // }
   ],
   reels: [
     {
