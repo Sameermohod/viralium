@@ -101,7 +101,7 @@ export default function AdminControls() {
               ✕
             </button>
             <div className="flex flex-col items-center mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#ff6b00] to-[#d4af37] flex items-center justify-center mb-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#f27424] to-[#1d9bf0] flex items-center justify-center mb-3">
                 <Key className="text-white" size={24} />
               </div>
               <h3 className="text-xl font-bold tracking-tight text-white font-syne">Admin Console</h3>
@@ -118,7 +118,7 @@ export default function AdminControls() {
                     setPasswordInput(e.target.value);
                     setLoginError(false);
                   }}
-                  className={`w-full bg-neutral-900 border ${loginError ? 'border-red-500' : 'border-white/10'} text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#ff6b00] transition-colors`}
+                  className={`w-full bg-neutral-900 border ${loginError ? 'border-red-500' : 'border-white/10'} text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#f27424] transition-colors`}
                   autoFocus
                 />
                 {loginError && (
@@ -127,7 +127,7 @@ export default function AdminControls() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer"
+                className="w-full bg-gradient-to-r from-[#f27424] to-[#1d9bf0] text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl hover:shadow-[0_0_20px_rgba(242,116,36,0.3)] transition-all cursor-pointer"
               >
                 Log In
               </button>

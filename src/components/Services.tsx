@@ -11,25 +11,25 @@ export default function Services() {
       title: 'Cinematic Video Production',
       desc: 'Creating high-end narrative content that captures emotional interest and establishes immediate authority.',
       items: ['Brand Advertisement Videos', 'Product Advertisement Videos', 'Commercial Ads', 'Client Testimonials'],
-      icon: <Video className="text-[#ff6b00]" size={24} />
+      icon: <Video className="text-[#f27424]" size={24} />
     },
     {
       title: 'Social & Short-Form Content',
       desc: 'Viral-engineered short form vertical media designed to scale organic traffic and capture viewer retention.',
       items: ['Social Media Reels', 'Instagram Layout Content', 'Music Videos', 'Event Coverage'],
-      icon: <MonitorPlay className="text-purple-400" size={24} />
+      icon: <MonitorPlay className="text-[#0ea5e9]" size={24} />
     },
     {
       title: 'Premium Photography',
       desc: 'High-definition editorial imagery highlighting brand aesthetics, craftsmanship, and raw human element.',
       items: ['Product Shoots', 'Fashion Shoots', 'Portfolio Shoots', 'Corporate Photography'],
-      icon: <Camera className="text-[#d4af37]" size={24} />
+      icon: <Camera className="text-[#1d9bf0]" size={24} />
     },
     {
       title: 'Editing & Motion Design',
       desc: 'Polishing raw cuts with world-class sound design, custom motion graphics, color correction, and visual effects.',
       items: ['Advanced Video Editing', 'Motion Graphics', 'Sound FX Design', 'Color Grading (DaVinci)'],
-      icon: <Award className="text-blue-400" size={24} />
+      icon: <Award className="text-[#38bdf8]" size={24} />
     }
   ];
 
@@ -53,8 +53,8 @@ export default function Services() {
       className="py-24 bg-neutral-950 text-white relative overflow-hidden"
     >
       {/* Background decorations */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#ff6b00]/5 blur-[120px] rounded-full" />
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-purple-500/5 blur-[120px] rounded-full" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#f27424]/5 blur-[120px] rounded-full" />
+      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#1d9bf0]/5 blur-[120px] rounded-full" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
@@ -63,7 +63,7 @@ export default function Services() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+            className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
           >
             What We Do
           </motion.p>
@@ -107,7 +107,7 @@ export default function Services() {
                     <div className="p-3.5 bg-neutral-900/80 rounded-2xl border border-white/5 group-hover:scale-105 transition-transform duration-300">
                       {service.icon}
                     </div>
-                    <span className="text-xs font-mono text-neutral-600 group-hover:text-[#ff6b00] transition-colors">
+                    <span className="text-xs font-mono text-neutral-600 group-hover:text-[#f27424] transition-colors">
                       [0{idx + 1}]
                     </span>
                   </div>

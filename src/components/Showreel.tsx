@@ -120,7 +120,7 @@ export default function Showreel() {
                 e.stopPropagation();
                 setIsPlaying(false);
               }}
-              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#ff6b00] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center"
+              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#f27424] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center cursor-pointer"
               aria-label="Close video"
             >
               <X size={20} />

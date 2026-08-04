@@ -174,7 +174,7 @@ export default function Editable({ children, path, label, type = 'text', classNa
                 <button
                   type="submit"
                   disabled={isUploading}
-                  className="flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_15px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-r from-[#f27424] to-[#1d9bf0] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_15px_rgba(242,116,36,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Changes

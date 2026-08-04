@@ -48,7 +48,7 @@ export default function FAQ() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+            className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
           >
             Got Questions?
           </motion.p>
@@ -77,12 +77,12 @@ export default function FAQ() {
                 {/* Header toggle button */}
                 <button
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full px-6 py-5 md:py-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors"
+                  className="w-full px-6 py-5 md:py-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors cursor-pointer"
                 >
                   <span className="font-bold font-syne text-sm md:text-base pr-4 text-white">
                     {faq.question}
                   </span>
-                  <div className="text-[#ff6b00] p-1 bg-neutral-950 rounded-full border border-white/5">
+                  <div className="text-[#f27424] p-1 bg-neutral-950 rounded-full border border-white/5">
                     {isOpen ? <Minus size={16} /> : <Plus size={16} />}
                   </div>
                 </button>

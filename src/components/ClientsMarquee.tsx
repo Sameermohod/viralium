@@ -21,7 +21,7 @@ export default function ClientsMarquee() {
               className="text-2xl md:text-4xl font-extrabold tracking-tighter text-neutral-700 hover:text-white transition-colors duration-300 font-syne flex items-center gap-4 cursor-default"
             >
               {brand}
-              <span className="w-2.5 h-2.5 rounded-full bg-[#ff6b00]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#f27424]" />
             </span>
           ))}
         </div>

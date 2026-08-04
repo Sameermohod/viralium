@@ -91,7 +91,7 @@ export default function BeforeAfter() {
             </video>
             
             {/* "After" Label Badge */}
-            <div className="absolute right-6 bottom-6 bg-neutral-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-[#d4af37]">
+            <div className="absolute right-6 bottom-6 bg-neutral-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-[#1d9bf0]">
               Final Color Grade
             </div>
           </div>

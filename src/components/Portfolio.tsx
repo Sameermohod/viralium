@@ -163,7 +163,7 @@ export default function Portfolio() {
         {/* Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3">
+            <p className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3">
               Creative Collection
             </p>
             <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter font-syne">
@@ -181,7 +181,7 @@ export default function Portfolio() {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer ${
                 activeCategory === category
                   ? 'bg-white text-black font-bold'
                   : 'bg-neutral-900 border border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
@@ -201,9 +201,9 @@ export default function Portfolio() {
           {isAdminMode && (
             <div 
               onClick={handleAddNewClick}
-              className="break-inside-avoid relative rounded-2xl border border-dashed border-white/20 hover:border-[#ff6b00] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px] transition-all duration-300 group"
+              className="break-inside-avoid relative rounded-2xl border border-dashed border-white/20 hover:border-[#f27424] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px] transition-all duration-300 group"
             >
-              <div className="w-12 h-12 rounded-full bg-[#ff6b00]/10 text-[#ff6b00] flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300">
+              <div className="w-12 h-12 rounded-full bg-[#f27424]/10 text-[#f27424] flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300">
                 <Plus size={22} />
               </div>
               <h4 className="text-sm font-bold text-white font-syne">Add New Project</h4>
@@ -559,7 +559,7 @@ export default function Portfolio() {
                 <button
                   type="submit"
                   disabled={isUploadingSrc || isUploadingThumb}
-                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#f27424] to-[#1d9bf0] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(242,116,36,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Project

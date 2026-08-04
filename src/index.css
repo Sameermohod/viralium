@@ -7,16 +7,18 @@
   --font-inter: 'Inter', sans-serif;
   --font-syne: var(--font-space-grotesk);
   --font-outfit: var(--font-inter);
-  --color-gold: #d4af37;
-  --color-gold-hover: #b8962c;
-  --color-brand-orange: #ff6b00;
-  --color-brand-orange-hover: #e05e00;
-  --color-luxury-black: #050505;
-  --color-luxury-dark: #0f0f11;
-  --color-luxury-card: rgba(18, 18, 20, 0.6);
-  --color-luxury-gray: #1b1b1e;
-  --color-luxury-text: #a0a0a5;
-  --color-luxury-light: #f5f5f7;
+  --color-brand-orange: #f27424;
+  --color-brand-orange-hover: #d95f12;
+  --color-brand-blue: #1d9bf0;
+  --color-brand-blue-hover: #0284c7;
+  --color-gold: #1d9bf0;
+  --color-gold-hover: #0284c7;
+  --color-luxury-black: #090d14;
+  --color-luxury-dark: #0f172a;
+  --color-luxury-card: rgba(15, 23, 42, 0.6);
+  --color-luxury-gray: #1e293b;
+  --color-luxury-text: #94a3b8;
+  --color-luxury-light: #f8fafc;
 }
 
 /* Custom Spacing & Border Radius Overrides to Match Design Spec */
@@ -103,14 +105,14 @@
 }
 
 @utility text-gradient-gold {
-  background: linear-gradient(135deg, #f5f5f7 0%, #d4af37 50%, #ff6b00 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #1d9bf0 50%, #f27424 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 @utility text-gradient-purple {
-  background: linear-gradient(135deg, #ff6b00 0%, #a855f7 50%, #6366f1 100%);
+  background: linear-gradient(135deg, #f27424 0%, #1d9bf0 50%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,7 +126,7 @@
     content: '';
     position: absolute;
     inset: -1px;
-    background: linear-gradient(135deg, var(--color-brand-orange), var(--color-gold), #a855f7);
+    background: linear-gradient(135deg, var(--color-brand-orange), var(--color-brand-blue), #0ea5e9);
     z-index: -1;
     border-radius: inherit;
     opacity: 0;
@@ -212,7 +214,7 @@ embed {
 
 /* Radial spotlight effect */
 .radial-glow {
-  background: radial-gradient(circle 800px at var(--x, 50%) var(--y, 50%), rgba(255, 107, 0, 0.06), transparent 80%);
+  background: radial-gradient(circle 800px at var(--x, 50%) var(--y, 50%), rgba(242, 116, 36, 0.08), rgba(29, 155, 240, 0.05), transparent 80%);
 }
 
 /* Heading Typography & Sizing */
@@ -299,130 +301,253 @@ html.lenis, html.lenis body {
    LIGHT MODE THEME SYSTEM OVERRIDES
    ========================================== */
 :root.light-mode {
-  --color-luxury-black: #fafafa;
-  --color-luxury-dark: #f0f0f4;
-  --color-luxury-card: rgba(255, 255, 255, 0.75);
-  --color-luxury-gray: #e5e5eb;
-  --color-luxury-text: #374151;
-  --color-luxury-light: #111827;
+  --color-luxury-black: #fdfbf7;
+  --color-luxury-dark: #f4efe6;
+  --color-luxury-card: rgba(255, 255, 255, 0.9);
+  --color-luxury-gray: #e2e8f0;
+  --color-luxury-text: #475569;
+  --color-luxury-light: #0f172a;
 }
 
 /* Root background & typography overrides */
-.light-mode {
-  background-color: #fafafa !important;
-  color: #111827 !important;
+.light-mode,
+.light-mode body {
+  background-color: #fdfbf7 !important;
+  color: #0f172a !important;
 }
 
-/* Background class mappings */
-.light-mode .bg-neutral-950,
-.light-mode .bg-black,
-.light-mode .bg-neutral-950\/95,
-.light-mode .bg-black\/80,
-.light-mode .bg-black\/85,
-.light-mode .bg-neutral-950\/70 {
-  background-color: #ffffff !important;
+/* Grid background pattern in light mode */
+.light-mode.grid-bg,
+.light-mode .grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(30, 41, 59, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 41, 59, 0.05) 1px, transparent 1px) !important;
+}
+
+/* Background class mappings for sections and structural containers */
+.light-mode section.bg-neutral-950,
+.light-mode main .bg-neutral-950,
+.light-mode .bg-black {
+  background-color: #fdfbf7 !important;
 }
 
 .light-mode .bg-neutral-900,
 .light-mode .bg-neutral-900\/40,
 .light-mode .bg-neutral-900\/60,
 .light-mode .bg-neutral-900\/30 {
-  background-color: #f3f4f6 !important;
+  background-color: #ffffff !important;
+  border-color: rgba(30, 41, 59, 0.08) !important;
 }
 
 .light-mode .bg-neutral-900\/80 {
-  background-color: rgba(243, 244, 246, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
 }
 
-/* Text overrides */
-.light-mode .text-white,
+/* Cards & Glassmorphism in Light Mode */
+.light-mode .glassmorphism {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(30, 41, 59, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03) !important;
+}
+
+.light-mode .glassmorphism-light {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(30, 41, 59, 0.06) !important;
+}
+
+/* Typography Overrides */
 .light-mode h1,
 .light-mode h2,
 .light-mode h3,
 .light-mode h4,
-.light-mode h5 {
-  color: #111827 !important;
+.light-mode h5,
+.light-mode h6 {
+  color: #0f172a !important;
 }
 
+.light-mode p,
 .light-mode .text-neutral-400,
 .light-mode .text-neutral-500,
 .light-mode .text-neutral-300 {
-  color: #4b5563 !important;
+  color: #475569 !important;
 }
 
-.light-mode .text-neutral-600 {
-  color: #6b7280 !important;
+.light-mode .text-neutral-600,
+.light-mode .text-neutral-700 {
+  color: #64748b !important;
 }
 
-/* Border overrides */
+/* Preserve White Text on Dark & Gradient Buttons/Cards/Badges */
+.light-mode [class*="bg-gradient"] *,
+.light-mode [class*="bg-gradient"] h1,
+.light-mode [class*="bg-gradient"] h2,
+.light-mode [class*="bg-gradient"] h3,
+.light-mode [class*="bg-gradient"] h4,
+.light-mode [class*="bg-gradient"] p,
+.light-mode [class*="bg-gradient"] span,
+.light-mode button.bg-white.text-black,
+.light-mode .bg-emerald-500,
+.light-mode .bg-emerald-500 *,
+.light-mode .bg-neutral-950\/95 *,
+.light-mode .bg-neutral-900.border-neutral-800 *,
+.light-mode button[class*="bg-gradient"] *,
+.light-mode a[class*="bg-gradient"] * {
+  color: inherit;
+}
+
+.light-mode [class*="bg-gradient-to-r"] text,
+.light-mode button.bg-gradient-to-r,
+.light-mode a.bg-gradient-to-r,
+.light-mode .bg-gradient-to-br.from-\[\#f27424\],
+.light-mode .bg-gradient-to-br.from-\[\#f27424\] h3,
+.light-mode .bg-gradient-to-br.from-\[\#f27424\] p {
+  color: #ffffff !important;
+}
+
+/* Gradient text adjustments for light mode contrast */
+.light-mode .text-gradient-gold {
+  background: linear-gradient(135deg, #0f172a 0%, #1d9bf0 55%, #f27424 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.light-mode .text-gradient-purple {
+  background: linear-gradient(135deg, #f27424 0%, #1d9bf0 60%, #0ea5e9 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Navigation bar in Light Mode */
+.light-mode nav.bg-neutral-950\/70,
+.light-mode nav.fixed {
+  background-color: rgba(253, 251, 247, 0.9) !important;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.08) !important;
+}
+
+.light-mode nav a,
+.light-mode nav span.font-syne {
+  color: #0f172a !important;
+}
+
+.light-mode nav .text-neutral-400 {
+  color: #475569 !important;
+}
+
+.light-mode nav .text-neutral-400:hover {
+  color: #0f172a !important;
+}
+
+/* Marquee Text in Light Mode */
+.light-mode .animate-marquee span {
+  color: #64748b !important;
+}
+
+.light-mode .animate-marquee span:hover {
+  color: #0f172a !important;
+}
+
+/* Border Overrides */
 .light-mode .border-white\/5,
 .light-mode .border-white\/10,
 .light-mode .border-neutral-800,
 .light-mode .border-white\/20,
 .light-mode .border-dashed {
-  border-color: rgba(17, 24, 39, 0.08) !important;
+  border-color: rgba(30, 41, 59, 0.1) !important;
 }
 
-/* Forms, interactive inputs, dropdowns */
+/* Form controls & Input fields in Light Mode */
 .light-mode input,
 .light-mode select,
 .light-mode textarea {
   background-color: #ffffff !important;
-  border-color: rgba(17, 24, 39, 0.12) !important;
-  color: #111827 !important;
+  border: 1px solid rgba(30, 41, 59, 0.15) !important;
+  color: #0f172a !important;
 }
 
 .light-mode input::placeholder,
 .light-mode textarea::placeholder {
-  color: #9ca3af !important;
+  color: #94a3b8 !important;
 }
 
 .light-mode input:focus,
 .light-mode select:focus,
 .light-mode textarea:focus {
-  border-color: #ff6b00 !important;
+  border-color: #f27424 !important;
+  box-shadow: 0 0 0 3px rgba(242, 116, 36, 0.15) !important;
 }
 
-/* Dialog and lightboxes */
+/* Footer in Light Mode */
+.light-mode footer {
+  background-color: #f4efe6 !important;
+  border-top: 1px solid rgba(30, 41, 59, 0.08) !important;
+}
+
+.light-mode footer p,
+.light-mode footer a {
+  color: #475569 !important;
+}
+
+.light-mode footer a:hover,
+.light-mode footer h4 {
+  color: #0f172a !important;
+}
+
+/* Video Overlay Adjustments in Light Mode */
+.light-mode video {
+  opacity: 0.15 !important;
+}
+
+/* Modal & Dialog Overlays */
 .light-mode .bg-neutral-950\/95 {
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  backdrop-filter: blur(16px) !important;
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(30, 41, 59, 0.12) !important;
 }
 
-/* Gradient / ambient glow opacity reduction */
-.light-mode [class*="blur-"] {
-  opacity: 0.25 !important;
-}
-
-/* Active tab categories and inverted elements */
+/* Category tab buttons in Light Mode */
 .light-mode .bg-white.text-black {
-  background-color: #111827 !important;
+  background-color: #0f172a !important;
   color: #ffffff !important;
 }
 
-.light-mode .bg-white.text-black:hover {
-  background-color: #1f2937 !important;
+.light-mode .bg-neutral-900.text-neutral-400 {
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid rgba(30, 41, 59, 0.1) !important;
 }
 
 .light-mode .bg-neutral-900.text-neutral-400:hover {
-  color: #111827 !important;
-  border-color: rgba(17, 24, 39, 0.2) !important;
+  color: #0f172a !important;
+  border-color: rgba(30, 41, 59, 0.25) !important;
 }
 
-/* Mobile dropdown drawer background */
-.light-mode .glassmorphism {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(17, 24, 39, 0.08) !important;
+/* ==========================================
+   HERO SECTION SPECIFIC LIGHT MODE OVERRIDES
+   ========================================== */
+.light-mode section.hero-section {
+  background-color: #fdfbf7 !important;
 }
 
-/* Footer layout */
-.light-mode footer {
-  background-color: #f3f4f6 !important;
-  border-top: 1px solid rgba(17, 24, 39, 0.06) !important;
+.light-mode .hero-video-overlay {
+  background: linear-gradient(to top, #fdfbf7 0%, rgba(253, 251, 247, 0.4) 50%, #fdfbf7 100%) !important;
 }
 
-/* Background video opacity reduction in light mode */
-.light-mode video {
-  opacity: 0.08 !important;
+.light-mode .hero-stat-number {
+  color: #0f172a !important;
 }
 
+.light-mode .hero-stats-row {
+  border-top-color: rgba(30, 41, 59, 0.12) !important;
+}
+
+.light-mode .hero-secondary-btn {
+  background: rgba(15, 23, 42, 0.05) !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+}
+
+.light-mode .hero-secondary-btn:hover {
+  background: rgba(15, 23, 42, 0.1) !important;
+  color: #0f172a !important;
+}

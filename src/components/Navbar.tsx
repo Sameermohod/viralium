@@ -87,7 +87,7 @@ export default function Navbar() {
                 className="text-sm font-medium tracking-wide text-neutral-400 hover:text-white transition-colors duration-300 relative py-1 group"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#ff6b00] group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#f27424] group-hover:w-full transition-all duration-300" />
               </a>
             ))}
 

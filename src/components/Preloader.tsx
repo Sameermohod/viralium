@@ -78,7 +78,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             
             <div className="overflow-hidden">
               <motion.p 
-                className="text-xs md:text-sm tracking-widest text-[#ff6b00] uppercase font-bold"
+                className="text-xs md:text-sm tracking-widest text-[#f27424] uppercase font-bold"
                 initial={{ y: 50 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.215, 0.61, 0.355, 1] }}
@@ -93,7 +93,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             <div className="w-full md:w-1/3 flex flex-col gap-2">
               <div className="h-[2px] bg-neutral-900 w-full relative overflow-hidden rounded-full">
                 <motion.div 
-                  className="h-full bg-gradient-to-r from-[#ff6b00] to-[#d4af37]"
+                  className="h-full bg-gradient-to-r from-[#f27424] to-[#1d9bf0]"
                   style={{ width: `${progress}%` }}
                 />
               </div>

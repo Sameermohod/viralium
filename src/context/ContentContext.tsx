@@ -54,7 +54,7 @@ interface ContentContextType {
 
 const defaultContent: ContentData = {
   logo: {
-    src: '/logo.png',
+    src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785857534915_IMG_2275.JPG (1).jpeg',
     text: 'VIRALIAM'
   },
   hero: {
@@ -195,18 +195,18 @@ const defaultContent: ContentData = {
   reels: [
     {
       id: 1,
-      videoSrc: 'https://player.vimeo.com/external/554839818.sd.mp4?s=d7e63b6b19a16f91f7c223c6cd631e8b2b95c37c&profile_id=165&oauth2_token_id=57447761',
-      title: 'Neon Urban Streetwear',
+      videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785858707737_02 (2).mp4',
+      title: 'Grow With Viraliam',
       views: '1.2M views',
-      description: 'Staggered visual pacing cut for clothing drops. Dynamic zoom transitions synced to deep bass loops.',
+      description: 'Every successful business deserves a powerful digital presence. At Viraliam, we help brands grow through innovative marketing strategies, engaging content, and cutting-edge technology solutions.',
       sound: 'Original Audio - Viraliam Music'
     },
     {
       id: 2,
-      videoSrc: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c054ba208d90d965d50972413e9a03b3&profile_id=139&oauth2_token_id=57447761',
-      title: 'Macro Watch Mechanics',
+      videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785859134230_01.mp4',
+      title: 'Create Brand Impact ✨',
       views: '840K views',
-      description: 'Slow-motion macro gears detail shots. High-contrast studio lighting emphasizing metallic reflections.',
+      description: 'At Viraliam, we transform ideas into engaging digital experiences that help businesses grow, connect with their audience, and leave a lasting impression.',
       sound: 'Ambient Soundscape - Chronos'
     },
     {

@@ -34,7 +34,7 @@ export default function App() {
         {/* Top Scroll Progress Indicator */}
         <motion.div
           style={{ scaleX: scrollYProgress, transformOrigin: '0%' }}
-          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#ff6b00] via-[#d4af37] to-purple-600 z-50 shadow-[0_0_12px_rgba(255,107,0,0.5)]"
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#f27424] via-[#1d9bf0] to-[#0ea5e9] z-50 shadow-[0_0_12px_rgba(242,116,36,0.5)]"
         />
 
         {/* Navigation Header */}

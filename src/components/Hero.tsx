@@ -61,7 +61,7 @@ export default function Hero() {
   };
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-950 text-white">
+    <section ref={sectionRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-950 text-white hero-section">
       {/* Background Cinematic Video */}
       <Editable path={['hero', 'videoSrc']} label="Hero Background Video URL" type="url" className="absolute inset-0 w-full h-full z-0 overflow-hidden select-none">
         <video
@@ -80,8 +80,8 @@ export default function Hero() {
           />
           {/* Fallback pattern */}
         </video>
-        {/* Dark radial overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-neutral-950" />
+        {/* Radial & Directional overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-neutral-950 hero-video-overlay" />
         <div className="absolute inset-0 bg-radial-glow" />
       </Editable>
 
@@ -103,9 +103,9 @@ export default function Hero() {
                       className="inline-block origin-left"
                     >
                       {word === "Brands." ? (
-                        <span className="text-[#ff6b00] drop-shadow-[0_0_15px_rgba(255,107,0,0.3)]">{word}</span>
+                        <span className="text-[#f27424] drop-shadow-[0_0_15px_rgba(242,116,36,0.3)]">{word}</span>
                       ) : word === "Content" ? (
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-luxury-light)] to-[#d4af37]">{word}</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-luxury-light)] to-[#1d9bf0]">{word}</span>
                       ) : (
                         word
                       )}
@@ -137,7 +137,7 @@ export default function Hero() {
             <Magnetic strength={0.2} range={35}>
               <button
                 onClick={() => handleScrollTo('#portfolio')}
-                className="bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full hover:shadow-[0_0_30px_rgba(255,107,0,0.4)] transition-all duration-300 flex items-center gap-2 group"
+                className="bg-gradient-to-r from-[#f27424] to-[#1d9bf0] !text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full hover:shadow-[0_0_30px_rgba(242,116,36,0.4)] transition-all duration-300 flex items-center gap-2 group cursor-pointer"
               >
                 View Portfolio <Play size={14} className="fill-current group-hover:scale-110 transition-transform" />
               </button>
@@ -146,7 +146,7 @@ export default function Hero() {
             <Magnetic strength={0.2} range={35}>
               <button
                 onClick={() => handleScrollTo('#contact')}
-                className="glassmorphism hover:bg-white/10 text-white font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300"
+                className="glassmorphism hover:bg-white/10 hero-secondary-btn font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300 cursor-pointer"
               >
                 Book Free Consultation
               </button>
@@ -159,11 +159,11 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.8 }}
-          className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 border-t border-white/10 pt-10 mt-12 w-full"
+          className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 border-t border-white/10 pt-10 mt-12 w-full hero-stats-row"
         >
           {/* Stat 1 */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white font-syne">
+            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white hero-stat-number font-syne">
               <AnimatedCounter value={100} suffix="+" />
             </span>
             <span className="text-[10px] md:text-xs uppercase tracking-wider text-neutral-500 font-bold">
@@ -173,7 +173,7 @@ export default function Hero() {
 
           {/* Stat 2 */}
           <div className="flex flex-col gap-1.5">
-            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white font-syne">
+            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white hero-stat-number font-syne">
               <AnimatedCounter value={50} suffix="+" />
             </span>
             <span className="text-[10px] md:text-xs uppercase tracking-wider text-neutral-500 font-bold">
@@ -183,7 +183,7 @@ export default function Hero() {
 
           {/* Stat 3 */}
           <div className="col-span-2 md:col-span-1 flex flex-col gap-1.5">
-            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#ff6b00] to-[#d4af37] font-syne">
+            <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#f27424] to-[#1d9bf0] font-syne">
               <AnimatedCounter value={20} suffix="M+" />
             </span>
             <span className="text-[10px] md:text-xs uppercase tracking-wider text-neutral-500 font-bold">
@@ -200,9 +200,9 @@ export default function Hero() {
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <span className="text-[8px] uppercase tracking-widest text-neutral-600 font-bold">Scroll to discover</span>
-        <div className="w-5 h-8 border border-neutral-800 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-[#ff6b00] rounded-full animate-bounce" />
+        <span className="text-[8px] uppercase tracking-widest text-neutral-500 font-bold">Scroll to discover</span>
+        <div className="w-5 h-8 border border-neutral-700 light-mode:border-slate-400 rounded-full flex justify-center p-1">
+          <div className="w-1 h-2 bg-[#f27424] rounded-full animate-bounce" />
         </div>
       </motion.div>
     </section>

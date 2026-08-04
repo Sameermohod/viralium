@@ -84,15 +84,15 @@ export default function CustomCursor() {
     hover: {
       width: 48,
       height: 48,
-      backgroundColor: 'rgba(255, 107, 0, 0.1)',
-      border: '1.5px solid #ff6b00',
+      backgroundColor: 'rgba(242, 116, 36, 0.1)',
+      border: '1.5px solid #f27424',
       transition: { type: 'spring', stiffness: 300, damping: 20 }
     },
     play: {
       width: 80,
       height: 80,
-      backgroundColor: 'rgba(212, 175, 55, 0.15)',
-      border: '2px solid #d4af37',
+      backgroundColor: 'rgba(29, 155, 240, 0.15)',
+      border: '2px solid #1d9bf0',
       transition: { type: 'spring', stiffness: 300, damping: 20 }
     },
     view: {
@@ -105,8 +105,8 @@ export default function CustomCursor() {
     drag: {
       width: 64,
       height: 64,
-      backgroundColor: 'rgba(168, 85, 247, 0.15)',
-      border: '1.5px solid #a855f7',
+      backgroundColor: 'rgba(14, 165, 233, 0.15)',
+      border: '1.5px solid #0ea5e9',
       transition: { type: 'spring', stiffness: 300, damping: 20 }
     }
   };

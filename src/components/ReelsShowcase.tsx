@@ -133,8 +133,9 @@ export default function ReelsShowcase() {
 
   return (
     <section ref={sectionRef} className="py-24 bg-neutral-950 text-white relative overflow-hidden">
-      {/* Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/5 blur-[120px] rounded-full" />
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#1d9bf0]/5 blur-[120px] rounded-full" />
+      <div className="absolute top-1/4 right-10 w-80 h-80 bg-[#f27424]/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -147,7 +148,7 @@ export default function ReelsShowcase() {
               <div className="absolute left-4 md:-left-8 flex flex-col gap-3 z-20">
                 <button
                   onClick={handlePrev}
-                  className="bg-neutral-900 border border-white/10 text-white hover:bg-[#ff6b00] hover:border-transparent p-3 rounded-full transition-all duration-300 cursor-pointer"
+                  className="bg-neutral-900 border border-white/10 text-white hover:bg-[#f27424] hover:border-transparent p-3 rounded-full transition-all duration-300 cursor-pointer"
                   aria-label="Previous Reel"
                 >
                   <ChevronUp size={18} />
@@ -293,7 +294,7 @@ export default function ReelsShowcase() {
 
             <div className="space-y-6">
               <div className="flex gap-4 items-start">
-                <span className="text-xl font-bold font-syne text-[#ff6b00]">95%</span>
+                <span className="text-xl font-bold font-syne text-[#f27424]">95%</span>
                 <div>
                   <h4 className="text-base font-bold font-syne text-white">First 3-Second Hook</h4>
                   <p className="text-xs text-neutral-500 font-light leading-relaxed mt-1">
@@ -302,7 +303,7 @@ export default function ReelsShowcase() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <span className="text-xl font-bold font-syne text-[#d4af37]">2x</span>
+                <span className="text-xl font-bold font-syne text-[#1d9bf0]">2x</span>
                 <div>
                   <h4 className="text-base font-bold font-syne text-white">Pacing & Sound Design</h4>
                   <p className="text-xs text-neutral-500 font-light leading-relaxed mt-1">
@@ -311,7 +312,7 @@ export default function ReelsShowcase() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <span className="text-xl font-bold font-syne text-purple-400">10x</span>
+                <span className="text-xl font-bold font-syne text-[#0ea5e9]">10x</span>
                 <div>
                   <h4 className="text-base font-bold font-syne text-white">Algorithmic Reach</h4>
                   <p className="text-xs text-neutral-500 font-light leading-relaxed mt-1">
@@ -436,7 +437,7 @@ export default function ReelsShowcase() {
                 <button
                   type="submit"
                   disabled={isUploading}
-                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#ff6b00] to-[#d4af37] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all cursor-pointer disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-6 py-2.5 bg-gradient-to-r from-[#f27424] to-[#1d9bf0] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(242,116,36,0.3)] transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Save size={13} />
                   Save Reel

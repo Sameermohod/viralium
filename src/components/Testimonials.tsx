@@ -59,7 +59,7 @@ export default function Testimonials() {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3">
+          <p className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3">
             Client Feedback
           </p>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight font-syne">
@@ -86,7 +86,7 @@ export default function Testimonials() {
               {/* Stars */}
               <div className="flex gap-1 mb-6">
                 {[...Array(testimonials[currentIdx].rating)].map((_, i) => (
-                  <Star key={i} size={16} className="fill-current text-[#d4af37]" />
+                  <Star key={i} size={16} className="fill-current text-[#f27424]" />
                 ))}
               </div>
 
@@ -108,7 +108,7 @@ export default function Testimonials() {
                   </h4>
                   <p className="text-xs text-neutral-500 font-light mt-0.5">
                     {testimonials[currentIdx].role} —{' '}
-                    <span className="text-[#ff6b00] font-semibold">
+                    <span className="text-[#1d9bf0] font-semibold">
                       {testimonials[currentIdx].company}
                     </span>
                   </p>
@@ -121,14 +121,14 @@ export default function Testimonials() {
           <div className="flex gap-4 mt-12">
             <button
               onClick={handlePrev}
-              className="w-12 h-12 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full flex items-center justify-center text-white transition-all hover:scale-105 duration-300"
+              className="w-12 h-12 bg-neutral-900 hover:bg-[#f27424] border border-white/5 rounded-full flex items-center justify-center text-white transition-all hover:scale-105 duration-300 cursor-pointer"
               aria-label="Previous testimonial"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={handleNext}
-              className="w-12 h-12 bg-neutral-900 hover:bg-[#ff6b00] border border-white/5 rounded-full flex items-center justify-center text-white transition-all hover:scale-105 duration-300"
+              className="w-12 h-12 bg-neutral-900 hover:bg-[#f27424] border border-white/5 rounded-full flex items-center justify-center text-white transition-all hover:scale-105 duration-300 cursor-pointer"
               aria-label="Next testimonial"
             >
               <ChevronRight size={20} />

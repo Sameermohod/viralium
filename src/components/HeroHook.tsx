@@ -10,23 +10,23 @@ export default function HeroHook() {
     {
       num: '01',
       title: 'Raw Footage',
-      icon: <Video className="text-[#ff6b00]" size={28} />,
+      icon: <Video className="text-[#f27424]" size={28} />,
       desc: 'High-end 4K/6K cinema capture, professional lighting setups, and flat color profiles preserving ultimate sensory details.',
-      color: 'from-[#ff6b00]/20 to-transparent'
+      color: 'from-[#f27424]/20 to-transparent'
     },
     {
       num: '02',
       title: 'Creative Editing',
-      icon: <Film className="text-[#d4af37]" size={28} />,
+      icon: <Film className="text-[#1d9bf0]" size={28} />,
       desc: 'Precision cuts, pacing, sound design, soundscapes, and color grading that transform clips into emotional narratives.',
-      color: 'from-[#d4af37]/20 to-transparent'
+      color: 'from-[#1d9bf0]/20 to-transparent'
     },
     {
       num: '03',
       title: 'Viral Content',
-      icon: <Share2 className="text-purple-500" size={28} />,
+      icon: <Share2 className="text-[#0ea5e9]" size={28} />,
       desc: 'Engineered hooks, high-retention editing styles, and platform optimization designed to scale organic social algorithms.',
-      color: 'from-purple-500/20 to-transparent'
+      color: 'from-[#0ea5e9]/20 to-transparent'
     },
     {
       num: '04',
@@ -40,8 +40,8 @@ export default function HeroHook() {
   return (
     <section ref={containerRef} className="py-24 md:py-36 bg-neutral-950 text-white relative overflow-hidden">
       {/* Background decorations */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-purple-600/10 to-transparent blur-3xl rounded-full" />
-      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-gradient-to-tr from-[#ff6b00]/10 to-transparent blur-3xl rounded-full" />
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-br from-[#1d9bf0]/10 to-transparent blur-3xl rounded-full" />
+      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-gradient-to-tr from-[#f27424]/10 to-transparent blur-3xl rounded-full" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Large Typography Hook */}

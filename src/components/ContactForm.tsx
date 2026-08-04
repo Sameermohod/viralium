@@ -136,8 +136,8 @@ export default function ContactForm() {
       className="py-24 bg-neutral-950 text-white relative overflow-hidden"
     >
       {/* Radial glow background */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ff6b00]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute top-12 left-0 w-96 h-96 bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#f27424]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-12 left-0 w-96 h-96 bg-[#1d9bf0]/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
@@ -150,7 +150,7 @@ export default function ContactForm() {
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+                className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
               >
                 Let's Collaborate
               </motion.p>
@@ -332,7 +332,7 @@ export default function ContactForm() {
                         onClick={() => handleSelectBudget(bud)}
                         className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all border ${
                           formData.budget === bud
-                            ? 'bg-[#d4af37] border-transparent text-black font-bold'
+                            ? 'bg-[#1d9bf0] border-transparent text-white font-bold'
                             : 'bg-neutral-900/60 border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
                         }`}
                       >

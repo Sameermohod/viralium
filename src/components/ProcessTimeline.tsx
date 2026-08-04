@@ -67,8 +67,8 @@ export default function ProcessTimeline() {
       className="py-24 bg-neutral-950 text-white relative overflow-hidden"
     >
       {/* Background decorations */}
-      <div className="absolute top-10 right-0 w-80 h-80 bg-[#ff6b00]/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 left-0 w-80 h-80 bg-purple-600/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-10 right-0 w-80 h-80 bg-[#f27424]/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-80 h-80 bg-[#1d9bf0]/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
         
@@ -77,7 +77,7 @@ export default function ProcessTimeline() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+            className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
           >
             How We Execute
           </motion.p>
@@ -100,7 +100,7 @@ export default function ProcessTimeline() {
           {/* Glowing Progress Line */}
           <motion.div
             style={{ scaleY, originY: 0 }}
-            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#ff6b00] via-[#d4af37] to-purple-500 -translate-x-1/2 shadow-[0_0_12px_rgba(255,107,0,0.5)]"
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#f27424] via-[#1d9bf0] to-[#0ea5e9] -translate-x-1/2 shadow-[0_0_12px_rgba(242,116,36,0.5)]"
           />
 
           {/* Timeline Items */}
@@ -116,7 +116,7 @@ export default function ProcessTimeline() {
                 >
                   
                   {/* Circle Indicator Icon */}
-                  <div className="absolute left-6 md:left-1/2 top-0 md:top-1/2 w-12 h-12 rounded-full bg-neutral-900 border-2 border-neutral-800 -translate-x-1/2 -translate-y-1/3 md:-translate-y-1/2 z-10 flex items-center justify-center text-neutral-400 group hover:border-[#ff6b00] hover:text-white transition-colors duration-300">
+                  <div className="absolute left-6 md:left-1/2 top-0 md:top-1/2 w-12 h-12 rounded-full bg-neutral-900 border-2 border-neutral-800 -translate-x-1/2 -translate-y-1/3 md:-translate-y-1/2 z-10 flex items-center justify-center text-neutral-400 group hover:border-[#f27424] hover:text-white transition-colors duration-300">
                     {step.icon}
                   </div>
 
@@ -133,7 +133,7 @@ export default function ProcessTimeline() {
                       className="glassmorphism rounded-2xl p-6 md:p-8 hover:border-white/10 transition-colors duration-300 relative group"
                     >
                       {/* Step Number label */}
-                      <span className="text-[10px] font-mono text-neutral-600 group-hover:text-[#ff6b00] transition-colors block mb-2">
+                      <span className="text-[10px] font-mono text-neutral-600 group-hover:text-[#f27424] transition-colors block mb-2">
                         PHASE 0{idx + 1}
                       </span>
                       
@@ -141,7 +141,7 @@ export default function ProcessTimeline() {
                         {step.title}
                       </h3>
                       
-                      <h4 className="text-xs uppercase tracking-wider text-[#d4af37] font-semibold mb-4">
+                      <h4 className="text-xs uppercase tracking-wider text-[#1d9bf0] font-semibold mb-4">
                         {step.tagline}
                       </h4>
                       

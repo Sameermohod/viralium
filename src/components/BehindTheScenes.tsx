@@ -42,7 +42,7 @@ export default function BehindTheScenes() {
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+              className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
             >
               Behind The Scenes
             </motion.p>

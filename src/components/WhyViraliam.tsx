@@ -10,27 +10,27 @@ export default function WhyViraliam() {
     {
       title: 'Creative Storytelling',
       desc: 'We write scripts that grab attention immediately and maintain emotional investment, building deep consumer trust.',
-      icon: <MessageSquare className="text-[#ff6b00]" size={20} />
+      icon: <MessageSquare className="text-[#f27424]" size={20} />
     },
     {
       title: 'Professional Production',
       desc: 'Cinematic lighting, high-end stabilization, and crisp audio. We do not compromise on technical quality.',
-      icon: <Video className="text-[#d4af37]" size={20} />
+      icon: <Video className="text-[#1d9bf0]" size={20} />
     },
     {
       title: 'Modern Equipment',
       desc: 'Filming on RED Digital Cinema, Sony FX series, anamorphic lenses, and professional DJI aerial drone platforms.',
-      icon: <Camera className="text-purple-400" size={20} />
+      icon: <Camera className="text-[#0ea5e9]" size={20} />
     },
     {
       title: 'Elite Creative Team',
       desc: 'Experienced directors, directors of photography, editors, colorists, and social distribution strategists.',
-      icon: <Users className="text-blue-400" size={20} />
+      icon: <Users className="text-[#38bdf8]" size={20} />
     },
     {
       title: 'High Velocity Execution',
       desc: 'Streamlined scripting and rapid editing workflows ensure your campaigns launch while concepts are hot.',
-      icon: <Zap className="text-yellow-400" size={20} />
+      icon: <Zap className="text-[#f27424]" size={20} />
     },
     {
       title: 'Performance Marketing',
@@ -40,7 +40,7 @@ export default function WhyViraliam() {
     {
       title: 'End-to-End Solutions',
       desc: 'From the initial strategy session and scripting to shooting, editing, ad campaign deployment, and analytics.',
-      icon: <Compass className="text-pink-400" size={20} />
+      icon: <Compass className="text-sky-400" size={20} />
     }
   ];
 
@@ -53,7 +53,7 @@ export default function WhyViraliam() {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-xs uppercase tracking-widest text-[#ff6b00] font-bold mb-3"
+            className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3"
           >
             The Viraliam Edge
           </motion.p>
@@ -76,7 +76,7 @@ export default function WhyViraliam() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-2 bg-gradient-to-br from-[#ff6b00] via-[#d4af37] to-purple-600 rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[280px] shadow-xl shadow-brand-orange/5"
+            className="lg:col-span-2 bg-gradient-to-br from-[#f27424] via-[#1d9bf0] to-[#0284c7] rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[280px] shadow-xl shadow-brand-orange/5"
           >
             <h3 className="text-2xl md:text-4xl font-extrabold font-syne text-white leading-tight">
               We do not just create content. We engineer brand assets.
