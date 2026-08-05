@@ -184,7 +184,7 @@ export default function Hero() {
           {/* Stat 3 */}
           <div className="col-span-2 md:col-span-1 flex flex-col gap-1.5">
             <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#f27424] to-[#1d9bf0] font-syne">
-              <AnimatedCounter value={1000} suffix="+" />
+              <AnimatedCounter value={1} suffix="k+" />
             </span>
             <span className="text-[10px] md:text-xs uppercase tracking-wider text-neutral-500 font-bold">
               Organic Video Views

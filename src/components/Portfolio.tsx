@@ -42,6 +42,7 @@ export default function Portfolio() {
   const categories = [
     'All',
     'Brand Ads',
+    'Containt Creation',
     'Product Videos',
     'Reels',
     'Photography',

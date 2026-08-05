@@ -63,9 +63,22 @@ const defaultContent: ContentData = {
     videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785859134230_01.mp4'
   },
   showreel: {
-    videoSrc: 'https://player.vimeo.com/external/517617478.sd.mp4?s=74f4b9f271efd36f2f3d9d71fa9d1c1c1f4e1f72&profile_id=165&oauth2_token_id=57447761'
+    videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785956093428_WhatsApp Video 2026-08-06 at 12.21.39 AM.mp4'
   },
   portfolio: [
+      {
+      id: '5',
+      title: '',
+      category: 'Containt Creation',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785955466965_WhatsApp%20Video%202026-08-06%20at%2012.11.30%20AM.mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785955638418_Screenshot%202026-08-06%20001634.png',
+      client: 'Nova Motors',
+      date: 'March 2026',
+      desc: 'Transform your space with timeless elegance and modern luxury. ✨',
+      aspectClass: 'aspect-[16/9]',
+      playAudio: true,
+    },
       {
       id: '55',
       title: 'Cinematic Wedding Story',
@@ -224,42 +237,42 @@ const defaultContent: ContentData = {
       desc: 'New Car Delivery Showcase ',
       aspectClass: 'aspect-[3/4]'
     },
-    {
-      id: '1',
-      title: 'Aura Luxury Perfume',
-      category: 'Product Videos',
-      type: 'video',
-      src: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c054ba208d90d965d50972413e9a03b3&profile_id=139&oauth2_token_id=57447761',
-      thumbnail: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80',
-      client: 'Aura Paris',
-      date: 'April 2026',
-      desc: 'A sensory commercial film showcasing the luxury glass design and gold mist notes of Aura Perfume. Shot on RED V-Raptor.',
-      aspectClass: 'aspect-[3/4]'
-    },
-    {
-      id: '2',
-      title: 'Chronos Timepiece Campaign',
-      category: 'Brand Ads',
-      type: 'video',
-      src: 'https://player.vimeo.com/external/403848749.sd.mp4?s=d0db5d51829e5a88c3a164b155f93539e0836528&profile_id=165&oauth2_token_id=57447761',
-      thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
-      client: 'Chronos Watches',
-      date: 'June 2026',
-      desc: 'Cinematic brand film for premium chronographs. Focused on water resistance, macro detail shots, and ticking precision.',
-      aspectClass: 'aspect-[16/9]'
-    },
-    {
-      id: '3',
-      title: 'Solstice Summer Fashion',
-      category: 'Photography',
-      type: 'image',
-      src: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=80',
-      thumbnail: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80',
-      client: 'Solstice Label',
-      date: 'May 2026',
-      desc: 'High-fashion editorial campaign captured in desert sunlight. Warm filters, heavy shadows, and linen textures.',
-      aspectClass: 'aspect-[3/4]'
-    },
+    // {
+    //   id: '1',
+    //   title: 'Aura Luxury Perfume',
+    //   category: 'Product Videos',
+    //   type: 'video',
+    //   src: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c054ba208d90d965d50972413e9a03b3&profile_id=139&oauth2_token_id=57447761',
+    //   thumbnail: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80',
+    //   client: 'Aura Paris',
+    //   date: 'April 2026',
+    //   desc: 'A sensory commercial film showcasing the luxury glass design and gold mist notes of Aura Perfume. Shot on RED V-Raptor.',
+    //   aspectClass: 'aspect-[3/4]'
+    // },
+    // {
+    //   id: '2',
+    //   title: 'Chronos Timepiece Campaign',
+    //   category: 'Brand Ads',
+    //   type: 'video',
+    //   src: 'https://player.vimeo.com/external/403848749.sd.mp4?s=d0db5d51829e5a88c3a164b155f93539e0836528&profile_id=165&oauth2_token_id=57447761',
+    //   thumbnail: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
+    //   client: 'Chronos Watches',
+    //   date: 'June 2026',
+    //   desc: 'Cinematic brand film for premium chronographs. Focused on water resistance, macro detail shots, and ticking precision.',
+    //   aspectClass: 'aspect-[16/9]'
+    // },
+    // {
+    //   id: '3',
+    //   title: 'Solstice Summer Fashion',
+    //   category: 'Photography',
+    //   type: 'image',
+    //   src: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=80',
+    //   thumbnail: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80',
+    //   client: 'Solstice Label',
+    //   date: 'May 2026',
+    //   desc: 'High-fashion editorial campaign captured in desert sunlight. Warm filters, heavy shadows, and linen textures.',
+    //   aspectClass: 'aspect-[3/4]'
+    // },
 
     // {
     //   id: '12',
@@ -273,18 +286,18 @@ const defaultContent: ContentData = {
     //   desc: 'Transform your space with timeless elegance and modern luxury. ✨',
     //   aspectClass: 'aspect-[16/9]'
     // },
-    {
-      id: '5',
-      title: 'Pulse Neon Rap Video',
-      category: 'Music Videos',
-      type: 'video',
-      src: 'https://player.vimeo.com/external/554839818.sd.mp4?s=d7e63b6b19a16f91f7c223c6cd631e8b2b95c37c&profile_id=165&oauth2_token_id=57447761',
-      thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
-      client: 'Yung Pulse',
-      date: 'January 2026',
-      desc: 'A futuristic cyber-rap music video featuring rapid transition editing, glitch effects, neon lasers, and high-contrast grading.',
-      aspectClass: 'aspect-[16/9]'
-    },
+    // {
+    //   id: '5',
+    //   title: 'Pulse Neon Rap Video',
+    //   category: 'Music Videos',
+    //   type: 'video',
+    //   src: 'https://player.vimeo.com/external/554839818.sd.mp4?s=d7e63b6b19a16f91f7c223c6cd631e8b2b95c37c&profile_id=165&oauth2_token_id=57447761',
+    //   thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+    //   client: 'Yung Pulse',
+    //   date: 'January 2026',
+    //   desc: 'A futuristic cyber-rap music video featuring rapid transition editing, glitch effects, neon lasers, and high-contrast grading.',
+    //   aspectClass: 'aspect-[16/9]'
+    // },
 
     // {
     //   id: '6',
