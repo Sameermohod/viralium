@@ -17,7 +17,7 @@ export default function Portfolio() {
   // Admin CRUD states
   const [editingItem, setEditingItem] = useState<PortfolioItem | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
-  
+
   const [formTitle, setFormTitle] = useState('');
   const [formCategory, setFormCategory] = useState('Brand Ads');
   const [formType, setFormType] = useState<'video' | 'image'>('video');
@@ -41,6 +41,7 @@ export default function Portfolio() {
     'Reels',
     'Photography',
     'Music Videos',
+    'Wedding Shoots',
     'Commercials',
     'Corporate',
     'Behind The Scenes'
@@ -153,13 +154,13 @@ export default function Portfolio() {
     : portfolioItems.filter(item => item.category === activeCategory);
 
   return (
-    <section 
-      id="portfolio" 
-      ref={containerRef} 
+    <section
+      id="portfolio"
+      ref={containerRef}
       className="py-24 bg-neutral-950 text-white relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
+
         {/* Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div>
@@ -193,13 +194,13 @@ export default function Portfolio() {
         </div>
 
         {/* Masonry Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
         >
           {/* Admin Add New Card */}
           {isAdminMode && (
-            <div 
+            <div
               onClick={handleAddNewClick}
               className="break-inside-avoid relative rounded-2xl border border-dashed border-white/20 hover:border-[#f27424] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px] transition-all duration-300 group"
             >
@@ -267,7 +268,7 @@ export default function Portfolio() {
                       loading="lazy"
                     />
                   )}
-                  
+
                   {/* Subtle Video Badge Icon */}
                   {item.type === 'video' && hoveredId !== item.id && (
                     <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
@@ -375,7 +376,7 @@ export default function Portfolio() {
       {/* Portfolio Item Add/Edit Form Modal (Portalled to document.body) */}
       {(isAddingNew || editingItem) && createPortal(
         <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] flex items-center justify-center p-4 overflow-y-auto text-white">
-          <div 
+          <div
             className="w-full max-w-xl bg-neutral-950 border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl relative my-8"
             onClick={(e) => e.stopPropagation()}
           >
