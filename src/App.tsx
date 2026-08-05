@@ -13,7 +13,7 @@ import WhyViraliam from './components/WhyViraliam';
 // import BeforeAfter from './components/BeforeAfter';
 import ReelsShowcase from './components/ReelsShowcase';
 import BehindTheScenes from './components/BehindTheScenes';
-import Testimonials from './components/Testimonials';
+// import Testimonials from './components/Testimonials';
 import ClientsMarquee from './components/ClientsMarquee';
 import FAQ from './components/FAQ';
 import ContactForm from './components/ContactForm';
@@ -52,7 +52,7 @@ export default function App() {
           {/* <BeforeAfter /> */}
           <ReelsShowcase />
           <BehindTheScenes />
-          <Testimonials />
+          {/* <Testimonials /> */}
           <ClientsMarquee />
           <FAQ />
           <ContactForm />

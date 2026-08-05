@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Film, Grid, LayoutList } from 'lucide-react';
+import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Film, Grid, LayoutList, Volume2 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import type { PortfolioItem } from '../context/ContentContext';
 
@@ -14,10 +14,56 @@ export default function Portfolio() {
 
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('carousel');
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
   const { content, updateContent, isAdminMode } = useContent();
   const portfolioItems = content.portfolio;
+
+  const categories = [
+    'All',
+    'Brand Ads',
+    'Containt Creation',
+    'Product Videos',
+    'Reels',
+    'Photography',
+    'Music Videos',
+    'Wedding Shoots',
+    'Commercials',
+    'Corporate',
+    'Behind The Scenes'
+  ];
+
+  const filteredItems = activeCategory === 'All'
+    ? portfolioItems
+    : portfolioItems.filter(item => item.category === activeCategory);
+
+  // Auto-move carousel continuously from left to right using 60fps requestAnimationFrame
+  useEffect(() => {
+    if (viewMode !== 'carousel' || isCarouselHovered || hoveredId !== null || selectedItem !== null) return;
+
+    const container = gridScrollRef.current;
+    if (!container) return;
+
+    let animId: number;
+    let lastTime = performance.now();
+
+    const step = (now: number) => {
+      const elapsed = now - lastTime;
+      if (elapsed >= 16) {
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 3) {
+          container.scrollLeft = 0;
+        } else {
+          container.scrollLeft += 1;
+        }
+        lastTime = now;
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [viewMode, isCarouselHovered, hoveredId, selectedItem, filteredItems]);
 
   // Admin CRUD states
   const [editingItem, setEditingItem] = useState<PortfolioItem | null>(null);
@@ -38,24 +84,6 @@ export default function Portfolio() {
   const [isUploadingSrc, setIsUploadingSrc] = useState(false);
   const [isUploadingThumb, setIsUploadingThumb] = useState(false);
   const [uploadError, setUploadError] = useState('');
-
-  const categories = [
-    'All',
-    'Brand Ads',
-    'Containt Creation',
-    'Product Videos',
-    'Reels',
-    'Photography',
-    'Music Videos',
-    'Wedding Shoots',
-    'Commercials',
-    'Corporate',
-    'Behind The Scenes'
-  ];
-
-  const filteredItems = activeCategory === 'All'
-    ? portfolioItems
-    : portfolioItems.filter(item => item.category === activeCategory);
 
   const handleScrollCheck = () => {
     if (gridScrollRef.current) {
@@ -327,12 +355,14 @@ export default function Portfolio() {
             ref={gridScrollRef}
             onScroll={handleScrollCheck}
             onWheel={handleWheel}
+            onMouseEnter={() => setIsCarouselHovered(true)}
+            onMouseLeave={() => setIsCarouselHovered(false)}
             className={`custom-scrollbar transition-all duration-300 ${
               viewMode === 'grid'
                 ? `overflow-y-auto pr-2 ${
                     filteredItems.length > 4 ? 'max-h-[720px] md:max-h-[820px] pb-6' : ''
                   }`
-                : 'flex overflow-x-auto gap-6 pb-6 pt-2 scroll-smooth snap-x snap-mandatory'
+                : 'flex overflow-x-auto gap-6 pb-6 pt-2'
             }`}
           >
             {viewMode === 'grid' ? (
@@ -391,7 +421,7 @@ export default function Portfolio() {
                         </div>
                       )}
 
-                      {/* Visual Media Container */}
+                      {/* Visual Media Container: Thumbnail by default, video on hover */}
                       <div className={`relative overflow-hidden w-full ${item.aspectClass || 'aspect-[4/5]'} bg-neutral-950`}>
                         {item.type === 'video' && hoveredId === item.id ? (
                           <video
@@ -399,7 +429,7 @@ export default function Portfolio() {
                             muted={!item.playAudio}
                             loop
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           >
                             <source src={item.src} type="video/mp4" />
                           </video>
@@ -412,20 +442,27 @@ export default function Portfolio() {
                           />
                         )}
 
-                        {/* Subtle Video Badge Icon */}
+                        {/* Video Play Badge when not hovered */}
                         {item.type === 'video' && hoveredId !== item.id && (
                           <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
                             <Play size={12} className="fill-current text-white" />
                           </div>
                         )}
 
+                        {/* Sound Status Badge when hovered */}
+                        {item.type === 'video' && hoveredId === item.id && (
+                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-[#f27424]/40 z-10">
+                            <Volume2 size={12} className="text-[#f27424] animate-pulse" />
+                          </div>
+                        )}
+
                         {/* Hover Information overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-85 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5 flex items-center gap-1.5">
                             {item.category}
                           </span>
-                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5">
-                            {item.title} <ArrowUpRight size={16} />
+                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5 group-hover:text-[#f27424] transition-colors">
+                            {item.title} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                           </h3>
                         </div>
                       </div>
@@ -450,15 +487,15 @@ export default function Portfolio() {
                 )}
 
                 <AnimatePresence mode="popLayout">
-                  {filteredItems.map((item) => (
+                  {filteredItems.map((item, index) => (
                     <motion.div
                       layout
                       key={item.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, x: 40, scale: 0.93 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-[300px] md:w-[360px] shrink-0 snap-start relative rounded-2xl overflow-hidden group border border-white/5 bg-neutral-900 cursor-pointer"
+                      transition={{ duration: 0.45, delay: index * 0.05, ease: [0.25, 0.8, 0.25, 1] }}
+                      className="w-[300px] md:w-[360px] shrink-0 snap-start relative rounded-2xl overflow-hidden group border border-white/10 hover:border-[#f27424]/50 bg-neutral-900 cursor-pointer shadow-xl transition-all duration-500 hover:shadow-[0_0_30px_rgba(242,116,36,0.25)] hover:-translate-y-1"
                       onMouseEnter={() => setHoveredId(item.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       onClick={() => setSelectedItem(item)}
@@ -483,7 +520,7 @@ export default function Portfolio() {
                         </div>
                       )}
 
-                      {/* Visual Media Container */}
+                      {/* Visual Media Container: Thumbnail by default, video on hover */}
                       <div className="relative overflow-hidden w-full h-[420px] bg-neutral-950">
                         {item.type === 'video' && hoveredId === item.id ? (
                           <video
@@ -491,7 +528,7 @@ export default function Portfolio() {
                             muted={!item.playAudio}
                             loop
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           >
                             <source src={item.src} type="video/mp4" />
                           </video>
@@ -504,20 +541,27 @@ export default function Portfolio() {
                           />
                         )}
 
-                        {/* Subtle Video Badge Icon */}
+                        {/* Video Play Badge when not hovered */}
                         {item.type === 'video' && hoveredId !== item.id && (
                           <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
                             <Play size={12} className="fill-current text-white" />
                           </div>
                         )}
 
+                        {/* Sound Status Badge when hovered */}
+                        {item.type === 'video' && hoveredId === item.id && (
+                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-[#f27424]/40 z-10">
+                            <Volume2 size={12} className="text-[#f27424] animate-pulse" />
+                          </div>
+                        )}
+
                         {/* Information overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5">
+                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5 flex items-center gap-1.5">
                             {item.category}
                           </span>
-                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5 mb-1">
-                            {item.title} <ArrowUpRight size={16} />
+                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5 mb-1 group-hover:text-[#f27424] transition-colors">
+                            {item.title} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                           </h3>
                           <p className="text-xs text-neutral-400 line-clamp-2">{item.desc}</p>
                         </div>
