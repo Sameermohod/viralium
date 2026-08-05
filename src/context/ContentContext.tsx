@@ -60,7 +60,7 @@ const defaultContent: ContentData = {
   hero: {
     title: 'We Create Content That Builds Brands.',
     subtitle: 'We help businesses dominate social media through premium video production, branding, photography, performance marketing, and creative storytelling.',
-    videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785951988872_WhatsApp Video 2026-08-05 at 11.12.38 PM.mp4'
+    videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785859134230_01.mp4'
   },
   showreel: {
     videoSrc: 'https://player.vimeo.com/external/517617478.sd.mp4?s=74f4b9f271efd36f2f3d9d71fa9d1c1c1f4e1f72&profile_id=165&oauth2_token_id=57447761'
