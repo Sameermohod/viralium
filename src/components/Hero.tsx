@@ -158,7 +158,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 border-t border-white/10 pt-10 mt-12 w-full hero-stats-row"
         >
           {/* Stat 1 */}
@@ -184,7 +184,7 @@ export default function Hero() {
           {/* Stat 3 */}
           <div className="col-span-2 md:col-span-1 flex flex-col gap-1.5">
             <span className="text-3xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#f27424] to-[#1d9bf0] font-syne">
-              <AnimatedCounter value={1} suffix="k+" />
+              <AnimatedCounter value={10} suffix="M+" />
             </span>
             <span className="text-[10px] md:text-xs uppercase tracking-wider text-neutral-500 font-bold">
               Organic Video Views

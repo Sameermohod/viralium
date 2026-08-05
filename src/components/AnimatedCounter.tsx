@@ -9,13 +9,30 @@ interface AnimatedCounterProps {
 
 export default function AnimatedCounter({ value, suffix = '', duration = 2 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   useEffect(() => {
-    if (!isInView) return;
+    if (isInView) {
+      setHasStarted(true);
+    }
+  }, [isInView]);
+
+  // Safety fallback for mobile viewports where IntersectionObserver might delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasStarted(true);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
 
     let startTime: number | null = null;
+    let animationFrameId: number;
 
     const animateNumber = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -24,14 +41,20 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2 }: An
       setCount(Math.floor(progress * value));
 
       if (progress < 1) {
-        requestAnimationFrame(animateNumber);
+        animationFrameId = requestAnimationFrame(animateNumber);
       } else {
         setCount(value);
       }
     };
 
-    requestAnimationFrame(animateNumber);
-  }, [isInView, value, duration]);
+    animationFrameId = requestAnimationFrame(animateNumber);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [hasStarted, value, duration]);
 
   return (
     <span ref={ref} className="font-syne font-bold">
@@ -40,3 +63,4 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2 }: An
     </span>
   );
 }
+
