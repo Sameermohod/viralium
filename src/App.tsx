@@ -10,7 +10,7 @@ import Portfolio from './components/Portfolio';
 import Services from './components/Services';
 import ProcessTimeline from './components/ProcessTimeline';
 import WhyViraliam from './components/WhyViraliam';
-import BeforeAfter from './components/BeforeAfter';
+// import BeforeAfter from './components/BeforeAfter';
 import ReelsShowcase from './components/ReelsShowcase';
 import BehindTheScenes from './components/BehindTheScenes';
 import Testimonials from './components/Testimonials';
@@ -49,7 +49,7 @@ export default function App() {
           <Services />
           <ProcessTimeline />
           <WhyViraliam />
-          <BeforeAfter />
+          {/* <BeforeAfter /> */}
           <ReelsShowcase />
           <BehindTheScenes />
           <Testimonials />

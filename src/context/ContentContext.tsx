@@ -60,23 +60,38 @@ const defaultContent: ContentData = {
   hero: {
     title: 'We Create Content That Builds Brands.',
     subtitle: 'We help businesses dominate social media through premium video production, branding, photography, performance marketing, and creative storytelling.',
-    videoSrc: 'https://player.vimeo.com/external/403848749.sd.mp4?s=d0db5d51829e5a88c3a164b155f93539e0836528&profile_id=165&oauth2_token_id=57447761'
+    videoSrc: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785951988872_WhatsApp Video 2026-08-05 at 11.12.38 PM.mp4'
   },
   showreel: {
     videoSrc: 'https://player.vimeo.com/external/517617478.sd.mp4?s=74f4b9f271efd36f2f3d9d71fa9d1c1c1f4e1f72&profile_id=165&oauth2_token_id=57447761'
   },
   portfolio: [
+      {
+      id: '55',
+      title: 'Cinematic Wedding Story',
+      category: 'Wedding Shoots',
+      type: 'video',
+      src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785950942883_lv_0_20260805160003.mp4',
+      thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785950903003_Screenshot%202026-08-05%20225805.png',
+      client: 'Nova Motors',
+      date: 'March 2026',
+      desc: 'Transform your space with timeless elegance and modern luxury. ✨',
+      aspectClass: 'aspect-[16/9]',
+      playAudio: true,
+    },
     {
       id: '45',
       title: 'Cinematic Wedding Story',
-      category: 'Commercials',
+      category: 'Wedding Shoots',
       type: 'video',
       src: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785948603343_lv_0_20260805152256.mp4',
       thumbnail: 'https://viraliam.s3.ap-south-1.amazonaws.com/1785948645095_Screenshot 2026-08-05 221919.png',
       client: 'Nova Motors',
       date: 'March 2026',
       desc: 'Transform your space with timeless elegance and modern luxury. ✨',
-      aspectClass: 'aspect-[16/9]'
+      aspectClass: 'aspect-[16/9]',
+            playAudio: true,
+
     },
     {
       id: '42',
@@ -89,6 +104,7 @@ const defaultContent: ContentData = {
       date: 'March 2026',
       desc: 'Transform your space with timeless elegance and modern luxury. ✨',
       aspectClass: 'aspect-[16/9]'
+
     },
     {
       id: '65',
@@ -100,7 +116,9 @@ const defaultContent: ContentData = {
       client: 'Nova Motors',
       date: 'March 2026',
       desc: 'Transform your space with timeless elegance and modern luxury. ✨',
-      aspectClass: 'aspect-[16/9]'
+      aspectClass: 'aspect-[16/9]',
+      playAudio: true,
+
     },
     {
       id: '173350159',

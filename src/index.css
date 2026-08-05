@@ -188,6 +188,39 @@ embed {
   background: var(--color-brand-orange);
 }
 
+/* Inner Container Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 116, 36, 0.5) rgba(255, 255, 255, 0.03);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(242, 116, 36, 0.5);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f27424;
+}
+
+.light-mode .custom-scrollbar {
+  scrollbar-color: rgba(242, 116, 36, 0.6) rgba(0, 0, 0, 0.05);
+}
+
+.light-mode .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
 /* Infinite Marquee */
 @keyframes marquee {
   0% { transform: translateX(0%); }

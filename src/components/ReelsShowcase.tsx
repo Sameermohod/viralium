@@ -27,6 +27,10 @@ export default function ReelsShowcase() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
+  const touchStartY = useRef<number | null>(null);
+  const touchEndY = useRef<number | null>(null);
+  const isWheelCooldown = useRef<boolean>(false);
+
   useEffect(() => {
     if (videoRef.current) {
       if (isSectionVisible) {
@@ -45,6 +49,44 @@ export default function ReelsShowcase() {
   const handlePrev = () => {
     if (reels.length === 0) return;
     setActiveReelIdx((prev) => (prev - 1 + reels.length) % reels.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchEndY.current = null;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartY.current === null || touchEndY.current === null) return;
+    const distance = touchStartY.current - touchEndY.current;
+    const minSwipeDistance = 35;
+
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+    touchStartY.current = null;
+    touchEndY.current = null;
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (isWheelCooldown.current) return;
+    if (Math.abs(e.deltaY) > 15) {
+      if (e.deltaY > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+      isWheelCooldown.current = true;
+      setTimeout(() => {
+        isWheelCooldown.current = false;
+      }, 400);
+    }
   };
 
   const handleAddNewClick = () => {
@@ -143,9 +185,9 @@ export default function ReelsShowcase() {
           {/* Left Column: Visual mobile frame */}
           <div className="flex justify-center items-center relative">
             
-            {/* Swiper Controls */}
+            {/* Swiper Controls (Hidden on mobile, direct touch swipe enabled) */}
             {reels.length > 0 && (
-              <div className="absolute left-4 md:-left-8 flex flex-col gap-3 z-20">
+              <div className="hidden md:flex absolute -left-8 flex-col gap-3 z-20">
                 <button
                   onClick={handlePrev}
                   className="bg-neutral-900 border border-white/10 text-white hover:bg-[#f27424] hover:border-transparent p-3 rounded-full transition-all duration-300 cursor-pointer"
@@ -164,11 +206,23 @@ export default function ReelsShowcase() {
             )}
 
             {/* Mobile Device Container Mockup */}
-            <div className="relative w-[300px] h-[600px] rounded-[50px] border-[12px] border-neutral-900 bg-neutral-950 shadow-2xl overflow-hidden shadow-purple-500/5">
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onWheel={handleWheel}
+              className="relative w-[300px] h-[600px] rounded-[50px] border-[12px] border-neutral-900 bg-neutral-950 shadow-2xl overflow-hidden shadow-purple-500/5 touch-pan-y cursor-grab active:cursor-grabbing select-none"
+            >
               
               {/* Notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-neutral-900 rounded-b-2xl z-30 flex items-center justify-center">
                 <div className="w-3 h-3 bg-neutral-950 rounded-full border border-neutral-900" />
+              </div>
+
+              {/* Swipe Up/Down Hint Badge */}
+              <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5 opacity-75 hover:opacity-100 transition-opacity">
+                <span className="text-[9px] uppercase font-bold tracking-widest text-neutral-300">Swipe Screen</span>
+                <ChevronUp size={10} className="text-[#ff6b00] animate-bounce" />
               </div>
 
               {/* Inner video player screen */}
@@ -180,6 +234,16 @@ export default function ReelsShowcase() {
                       initial={{ y: 200, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -200, opacity: 0 }}
+                      drag="y"
+                      dragConstraints={{ top: 0, bottom: 0 }}
+                      dragElastic={0.25}
+                      onDragEnd={(_, info) => {
+                        if (info.offset.y < -40 || info.velocity.y < -250) {
+                          handleNext();
+                        } else if (info.offset.y > 40 || info.velocity.y > 250) {
+                          handlePrev();
+                        }
+                      }}
                       transition={{ type: 'spring', damping: 25, stiffness: 180 }}
                       className="absolute inset-0 w-full h-full"
                     >

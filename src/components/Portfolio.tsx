@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon } from 'lucide-react';
+import { Play, X, Calendar, User, ArrowUpRight, Trash2, Edit, Plus, Save, Upload as UploadIcon, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Film, Grid, LayoutList } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import type { PortfolioItem } from '../context/ContentContext';
 
@@ -10,6 +10,11 @@ export default function Portfolio() {
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const containerRef = useRef(null);
+  const gridScrollRef = useRef<HTMLDivElement>(null);
+
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'carousel'>('grid');
 
   const { content, updateContent, isAdminMode } = useContent();
   const portfolioItems = content.portfolio;
@@ -46,6 +51,64 @@ export default function Portfolio() {
     'Corporate',
     'Behind The Scenes'
   ];
+
+  const filteredItems = activeCategory === 'All'
+    ? portfolioItems
+    : portfolioItems.filter(item => item.category === activeCategory);
+
+  const handleScrollCheck = () => {
+    if (gridScrollRef.current) {
+      const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth } = gridScrollRef.current;
+      if (viewMode === 'grid') {
+        setCanScrollUp(scrollTop > 15);
+        setCanScrollDown(scrollTop + clientHeight < scrollHeight - 15);
+      } else {
+        setCanScrollUp(scrollLeft > 15);
+        setCanScrollDown(scrollLeft + clientHeight < scrollWidth - 15);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleScrollCheck();
+    const timer = setTimeout(handleScrollCheck, 150);
+    return () => clearTimeout(timer);
+  }, [portfolioItems, activeCategory, viewMode]);
+
+  const scrollContainer = (direction: 'prev' | 'next') => {
+    if (gridScrollRef.current) {
+      if (viewMode === 'grid') {
+        const scrollAmount = direction === 'prev' ? -420 : 420;
+        gridScrollRef.current.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+      } else {
+        const scrollAmount = direction === 'prev' ? -380 : 380;
+        gridScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const container = gridScrollRef.current;
+    if (!container) return;
+
+    if (viewMode === 'grid') {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 4;
+      const isAtTop = scrollTop <= 4;
+
+      if ((e.deltaY > 0 && isAtBottom) || (e.deltaY < 0 && isAtTop)) {
+        window.scrollBy({ top: e.deltaY, behavior: 'auto' });
+      }
+    } else {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      const isAtRight = Math.ceil(scrollLeft + clientWidth) >= scrollWidth - 4;
+      const isAtLeft = scrollLeft <= 4;
+
+      if ((e.deltaY > 0 && isAtRight) || (e.deltaY < 0 && isAtLeft)) {
+        window.scrollBy({ top: e.deltaY, behavior: 'auto' });
+      }
+    }
+  };
 
   const handleAddNewClick = () => {
     setFormTitle('');
@@ -149,10 +212,6 @@ export default function Portfolio() {
     setEditingItem(null);
   };
 
-  const filteredItems = activeCategory === 'All'
-    ? portfolioItems
-    : portfolioItems.filter(item => item.category === activeCategory);
-
   return (
     <section
       id="portfolio"
@@ -162,7 +221,7 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
         {/* Title */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
           <div>
             <p className="text-xs uppercase tracking-widest text-[#f27424] font-bold mb-3">
               Creative Collection
@@ -172,124 +231,311 @@ export default function Portfolio() {
             </h2>
           </div>
           <div className="text-neutral-500 max-w-xs text-sm">
-            Hover cards to play reel snippets. Select categories to filter our narrative works.
+            Hover cards to play reel snippets. Select categories or scroll through our collection.
           </div>
         </div>
 
-        {/* Categories Tab Bar */}
-        <div className="flex overflow-x-auto gap-3 pb-8 scrollbar-none -mx-6 px-6 md:mx-0 md:px-0 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer ${
-                activeCategory === category
-                  ? 'bg-white text-black font-bold'
-                  : 'bg-neutral-900 border border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+        {/* Categories Tab Bar & Scroller Controls Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 pb-4 border-b border-white/5">
+          {/* Categories Bar */}
+          <div className="flex overflow-x-auto gap-2.5 scrollbar-none py-1 -mx-6 px-6 md:mx-0 md:px-0">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 cursor-pointer ${
+                  activeCategory === category
+                    ? 'bg-white text-black font-bold shadow-lg shadow-white/10 scale-105'
+                    : 'bg-neutral-900 border border-white/5 text-neutral-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Scroller Controls & Layout Toggle */}
+          <div className="flex items-center justify-between lg:justify-end gap-3 shrink-0">
+            {/* Project Count Badge */}
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-900/80 border border-white/5 text-xs text-neutral-400">
+              <Film size={13} className="text-[#f27424]" />
+              <span className="font-mono text-white font-medium">{filteredItems.length}</span>
+              <span>{filteredItems.length === 1 ? 'project' : 'projects'}</span>
+            </div>
+
+            {/* Layout View Switcher */}
+            <div className="flex items-center bg-neutral-900 border border-white/5 p-1 rounded-xl">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-1.5 rounded-lg transition-all text-xs flex items-center gap-1.5 cursor-pointer ${
+                  viewMode === 'grid' ? 'bg-[#f27424] text-white font-semibold shadow-md' : 'text-neutral-400 hover:text-white'
+                }`}
+                title="Scrollable Grid View"
+              >
+                <Grid size={14} />
+                <span className="hidden sm:inline text-[10px] uppercase font-bold">Grid</span>
+              </button>
+              <button
+                onClick={() => setViewMode('carousel')}
+                className={`p-1.5 rounded-lg transition-all text-xs flex items-center gap-1.5 cursor-pointer ${
+                  viewMode === 'carousel' ? 'bg-[#f27424] text-white font-semibold shadow-md' : 'text-neutral-400 hover:text-white'
+                }`}
+                title="Horizontal Filmstrip Carousel"
+              >
+                <LayoutList size={14} />
+                <span className="hidden sm:inline text-[10px] uppercase font-bold">Carousel</span>
+              </button>
+            </div>
+
+            {/* Scroll Navigation Controls */}
+            {(filteredItems.length > 3 || viewMode === 'carousel') && (
+              <div className="flex items-center gap-1.5 bg-neutral-900 border border-white/5 p-1 rounded-xl">
+                <button
+                  onClick={() => scrollContainer('prev')}
+                  disabled={!canScrollUp}
+                  className="p-1.5 rounded-lg text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-800 transition-all cursor-pointer"
+                  title={viewMode === 'grid' ? 'Scroll Up' : 'Scroll Left'}
+                >
+                  {viewMode === 'grid' ? <ChevronUp size={16} /> : <ChevronLeft size={16} />}
+                </button>
+                <button
+                  onClick={() => scrollContainer('next')}
+                  disabled={!canScrollDown}
+                  className="p-1.5 rounded-lg text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-neutral-800 transition-all cursor-pointer"
+                  title={viewMode === 'grid' ? 'Scroll Down' : 'Scroll Right'}
+                >
+                  {viewMode === 'grid' ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Masonry Grid */}
-        <motion.div
-          layout
-          className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
-        >
-          {/* Admin Add New Card */}
-          {isAdminMode && (
-            <div
-              onClick={handleAddNewClick}
-              className="break-inside-avoid relative rounded-2xl border border-dashed border-white/20 hover:border-[#f27424] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px] transition-all duration-300 group"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#f27424]/10 text-[#f27424] flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300">
-                <Plus size={22} />
-              </div>
-              <h4 className="text-sm font-bold text-white font-syne">Add New Project</h4>
-              <p className="text-xs text-neutral-500 mt-1 max-w-[200px]">Publish a new video or photo showcase to the collection.</p>
-            </div>
+        {/* Scrollable Container Wrapper */}
+        <div className="relative group/scroll">
+          {/* Top / Left Fade Overlay */}
+          {canScrollUp && viewMode === 'grid' && (
+            <div className="pointer-events-none absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-neutral-950 to-transparent z-20 transition-opacity duration-300" />
+          )}
+          {canScrollUp && viewMode === 'carousel' && (
+            <div className="pointer-events-none absolute top-0 left-0 bottom-0 w-12 bg-gradient-to-r from-neutral-950 to-transparent z-20 transition-opacity duration-300" />
           )}
 
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
+          {/* Scroller Box */}
+          <div
+            ref={gridScrollRef}
+            onScroll={handleScrollCheck}
+            onWheel={handleWheel}
+            className={`custom-scrollbar transition-all duration-300 ${
+              viewMode === 'grid'
+                ? `overflow-y-auto pr-2 ${
+                    filteredItems.length > 4 ? 'max-h-[720px] md:max-h-[820px] pb-6' : ''
+                  }`
+                : 'flex overflow-x-auto gap-6 pb-6 pt-2 scroll-smooth snap-x snap-mandatory'
+            }`}
+          >
+            {viewMode === 'grid' ? (
+              /* Grid Layout */
               <motion.div
                 layout
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
-                className="break-inside-avoid relative rounded-2xl overflow-hidden group border border-white/5 bg-neutral-900 cursor-pointer"
-                onMouseEnter={() => setHoveredId(item.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                onClick={() => setSelectedItem(item)}
-                data-cursor="view"
-                data-cursor-text="view"
+                className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
               >
-                {/* Admin Quick Controls Overlay */}
+                {/* Admin Add New Card */}
                 {isAdminMode && (
-                  <div className="absolute top-4 left-4 z-40 flex gap-2">
-                    <button
-                      onClick={(e) => handleEditClick(e, item)}
-                      className="bg-neutral-900 hover:bg-[#ff6b00] border border-white/10 text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
-                      title="Edit Project"
-                    >
-                      <Edit size={12} />
-                    </button>
-                    <button
-                      onClick={(e) => handleDeleteClick(e, item.id)}
-                      className="bg-neutral-900 hover:bg-red-600 border border-white/10 text-white hover:text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
-                      title="Delete Project"
-                    >
-                      <Trash2 size={12} />
-                    </button>
+                  <div
+                    onClick={handleAddNewClick}
+                    className="break-inside-avoid relative rounded-2xl border border-dashed border-white/20 hover:border-[#f27424] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px] transition-all duration-300 group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-[#f27424]/10 text-[#f27424] flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300">
+                      <Plus size={22} />
+                    </div>
+                    <h4 className="text-sm font-bold text-white font-syne">Add New Project</h4>
+                    <p className="text-xs text-neutral-500 mt-1 max-w-[200px]">Publish a new video or photo showcase to the collection.</p>
                   </div>
                 )}
 
-                {/* Visual Media Container */}
-                <div className={`relative overflow-hidden w-full ${item.aspectClass || 'aspect-[4/5]'} bg-neutral-950`}>
-                  {item.type === 'video' && hoveredId === item.id ? (
-                    <video
-                      autoPlay
-                      muted={!item.playAudio}
-                      loop
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
+                <AnimatePresence mode="popLayout">
+                  {filteredItems.map((item) => (
+                    <motion.div
+                      layout
+                      key={item.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="break-inside-avoid relative rounded-2xl overflow-hidden group border border-white/5 bg-neutral-900 cursor-pointer mb-6"
+                      onMouseEnter={() => setHoveredId(item.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      onClick={() => setSelectedItem(item)}
+                      data-cursor="view"
+                      data-cursor-text="view"
                     >
-                      <source src={item.src} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  )}
+                      {/* Admin Quick Controls Overlay */}
+                      {isAdminMode && (
+                        <div className="absolute top-4 left-4 z-40 flex gap-2">
+                          <button
+                            onClick={(e) => handleEditClick(e, item)}
+                            className="bg-neutral-900 hover:bg-[#ff6b00] border border-white/10 text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                            title="Edit Project"
+                          >
+                            <Edit size={12} />
+                          </button>
+                          <button
+                            onClick={(e) => handleDeleteClick(e, item.id)}
+                            className="bg-neutral-900 hover:bg-red-600 border border-white/10 text-white hover:text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                            title="Delete Project"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      )}
 
-                  {/* Subtle Video Badge Icon */}
-                  {item.type === 'video' && hoveredId !== item.id && (
-                    <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
-                      <Play size={12} className="fill-current text-white" />
-                    </div>
-                  )}
+                      {/* Visual Media Container */}
+                      <div className={`relative overflow-hidden w-full ${item.aspectClass || 'aspect-[4/5]'} bg-neutral-950`}>
+                        {item.type === 'video' && hoveredId === item.id ? (
+                          <video
+                            autoPlay
+                            muted={!item.playAudio}
+                            loop
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                          >
+                            <source src={item.src} type="video/mp4" />
+                          </video>
+                        ) : (
+                          <img
+                            src={item.thumbnail}
+                            alt={item.title}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        )}
 
-                  {/* Hover Information overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5">
-                      {item.category}
-                    </span>
-                    <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5">
-                      {item.title} <ArrowUpRight size={16} />
-                    </h3>
-                  </div>
-                </div>
+                        {/* Subtle Video Badge Icon */}
+                        {item.type === 'video' && hoveredId !== item.id && (
+                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
+                            <Play size={12} className="fill-current text-white" />
+                          </div>
+                        )}
+
+                        {/* Hover Information overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5">
+                            {item.category}
+                          </span>
+                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5">
+                            {item.title} <ArrowUpRight size={16} />
+                          </h3>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+            ) : (
+              /* Horizontal Filmstrip Carousel Layout */
+              <div className="flex gap-6">
+                {isAdminMode && (
+                  <div
+                    onClick={handleAddNewClick}
+                    className="w-[300px] shrink-0 snap-start relative rounded-2xl border border-dashed border-white/20 hover:border-[#f27424] bg-neutral-900/30 hover:bg-neutral-900/60 p-8 flex flex-col items-center justify-center text-center cursor-pointer min-h-[380px] transition-all duration-300 group"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-[#f27424]/10 text-[#f27424] flex items-center justify-center mb-3 group-hover:scale-110 transition-all duration-300">
+                      <Plus size={22} />
+                    </div>
+                    <h4 className="text-sm font-bold text-white font-syne">Add New Project</h4>
+                    <p className="text-xs text-neutral-500 mt-1 max-w-[200px]">Publish a new video or photo showcase to the collection.</p>
+                  </div>
+                )}
+
+                <AnimatePresence mode="popLayout">
+                  {filteredItems.map((item) => (
+                    <motion.div
+                      layout
+                      key={item.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-[300px] md:w-[360px] shrink-0 snap-start relative rounded-2xl overflow-hidden group border border-white/5 bg-neutral-900 cursor-pointer"
+                      onMouseEnter={() => setHoveredId(item.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      onClick={() => setSelectedItem(item)}
+                    >
+                      {/* Admin Quick Controls Overlay */}
+                      {isAdminMode && (
+                        <div className="absolute top-4 left-4 z-40 flex gap-2">
+                          <button
+                            onClick={(e) => handleEditClick(e, item)}
+                            className="bg-neutral-900 hover:bg-[#ff6b00] border border-white/10 text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                            title="Edit Project"
+                          >
+                            <Edit size={12} />
+                          </button>
+                          <button
+                            onClick={(e) => handleDeleteClick(e, item.id)}
+                            className="bg-neutral-900 hover:bg-red-600 border border-white/10 text-white hover:text-white p-2 rounded-lg shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center"
+                            title="Delete Project"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Visual Media Container */}
+                      <div className="relative overflow-hidden w-full h-[420px] bg-neutral-950">
+                        {item.type === 'video' && hoveredId === item.id ? (
+                          <video
+                            autoPlay
+                            muted={!item.playAudio}
+                            loop
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                          >
+                            <source src={item.src} type="video/mp4" />
+                          </video>
+                        ) : (
+                          <img
+                            src={item.thumbnail}
+                            alt={item.title}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        )}
+
+                        {/* Subtle Video Badge Icon */}
+                        {item.type === 'video' && hoveredId !== item.id && (
+                          <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10 z-10">
+                            <Play size={12} className="fill-current text-white" />
+                          </div>
+                        )}
+
+                        {/* Information overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                          <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5">
+                            {item.category}
+                          </span>
+                          <h3 className="text-lg font-bold font-syne text-white flex items-center gap-1.5 mb-1">
+                            {item.title} <ArrowUpRight size={16} />
+                          </h3>
+                          <p className="text-xs text-neutral-400 line-clamp-2">{item.desc}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
+          </div>
+
+          {/* Bottom / Right Fade Mask Overlay */}
+          {canScrollDown && viewMode === 'grid' && (
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-neutral-950 to-transparent z-20 transition-opacity duration-300" />
+          )}
+          {canScrollDown && viewMode === 'carousel' && (
+            <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-12 bg-gradient-to-l from-neutral-950 to-transparent z-20 transition-opacity duration-300" />
+          )}
+        </div>
       </div>
 
       {/* Project details popup modal (Portalled to document.body) */}
