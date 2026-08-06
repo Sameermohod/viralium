@@ -24,9 +24,9 @@ export default function Footer() {
     }
   };
 
-  const techStack = [
-    'React', 'Next.js', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'AWS', 'AI Stack', 'MERN Stack'
-  ];
+  // const techStack = [
+  //   'React', 'Next.js', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'AWS', 'AI Stack', 'MERN Stack'
+  // ];
 
   return (
     <footer className="bg-neutral-950 text-white border-t border-white/5 pt-20 pb-12 select-none relative z-10">
