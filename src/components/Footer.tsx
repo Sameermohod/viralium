@@ -125,7 +125,7 @@ export default function Footer() {
           </span>
 
           {/* Technology stack small cards */}
-          <div className="flex flex-wrap gap-2 items-center">
+          {/* <div className="flex flex-wrap gap-2 items-center">
             <span className="text-[9px] uppercase tracking-wider text-neutral-600 font-bold mr-1">
               Tech Stack:
             </span>
@@ -137,7 +137,7 @@ export default function Footer() {
                 {tech}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
 
       </div>
