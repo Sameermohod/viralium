@@ -92,7 +92,7 @@ export default function Showreel() {
           </div>
 
           {/* Bottom metadata tags */}
-          <div className="absolute bottom-6 left-8 right-8 flex justify-between items-center z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="showreel-metadata absolute bottom-6 left-8 right-8 flex justify-between items-center z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="text-xs font-bold tracking-widest uppercase text-white/80">
               Viraliam Creative Showreel ©2026
             </span>
@@ -108,7 +108,7 @@ export default function Showreel() {
       <AnimatePresence>
         {isPlaying && (
           <motion.div
-            className="fixed inset-0 bg-neutral-950 z-[999] flex items-center justify-center p-4 md:p-8"
+            className="showreel-modal fixed inset-0 bg-neutral-950 z-[999] flex items-center justify-center p-4 md:p-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -120,7 +120,7 @@ export default function Showreel() {
                 e.stopPropagation();
                 setIsPlaying(false);
               }}
-              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#f27424] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center cursor-pointer"
+              className="modal-close-btn absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#f27424] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center cursor-pointer"
               aria-label="Close video"
             >
               <X size={20} />

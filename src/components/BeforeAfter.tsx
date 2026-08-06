@@ -91,7 +91,7 @@ export default function BeforeAfter() {
             </video>
             
             {/* "After" Label Badge */}
-            <div className="absolute right-6 bottom-6 bg-neutral-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-[#1d9bf0]">
+            <div className="before-after-badge absolute right-6 bottom-6 bg-neutral-900/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-[#1d9bf0]">
               Final Color Grade
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function BeforeAfter() {
             </video>
             
             {/* "Before" Label Badge */}
-            <div className="absolute left-6 bottom-6 bg-neutral-950/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+            <div className="before-after-badge absolute left-6 bottom-6 bg-neutral-950/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-semibold uppercase tracking-wider text-neutral-400">
               Raw Log Footage
             </div>
           </div>

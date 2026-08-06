@@ -366,7 +366,7 @@ export default function ContactForm() {
                 )}
 
                 {/* Submit button */}
-                <Magnetic strength={0.15} range={30}>
+                <Magnetic strength={0.15} range={30} className="w-full block">
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -374,7 +374,7 @@ export default function ContactForm() {
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 size={14} className="animate-spin text-black" />
+                        <Loader2 size={14} className="animate-spin text-current" />
                         Sending Proposal...
                       </>
                     ) : (

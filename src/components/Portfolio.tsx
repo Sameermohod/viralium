@@ -457,7 +457,7 @@ export default function Portfolio() {
                         )}
 
                         {/* Hover Information overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-85 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <div className="video-card-overlay absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-85 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                           <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5 flex items-center gap-1.5">
                             {item.category}
                           </span>
@@ -556,7 +556,7 @@ export default function Portfolio() {
                         )}
 
                         {/* Information overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <div className="video-card-overlay absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                           <span className="text-[10px] text-[#ff6b00] uppercase font-bold tracking-widest mb-1.5 flex items-center gap-1.5">
                             {item.category}
                           </span>
@@ -587,7 +587,7 @@ export default function Portfolio() {
       <AnimatePresence>
         {selectedItem && createPortal(
           <motion.div
-            className="fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-[99999] flex items-center justify-center p-4 md:p-8 text-white"
+            className="showreel-modal fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-[99999] flex items-center justify-center p-4 md:p-8 text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -597,7 +597,7 @@ export default function Portfolio() {
             {/* Close button */}
             <button
               onClick={() => setSelectedItem(null)}
-              className="absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#ff6b00] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 cursor-pointer"
+              className="modal-close-btn absolute top-6 right-6 md:top-8 md:right-8 bg-white/10 hover:bg-[#ff6b00] border border-white/10 text-white p-3 rounded-full hover:scale-110 transition-all duration-300 z-50 cursor-pointer"
             >
               <X size={20} />
             </button>

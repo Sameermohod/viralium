@@ -211,7 +211,7 @@ export default function ReelsShowcase() {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               onWheel={handleWheel}
-              className="relative w-[300px] h-[600px] rounded-[50px] border-[12px] border-neutral-900 bg-neutral-950 shadow-2xl overflow-hidden shadow-purple-500/5 touch-pan-y cursor-grab active:cursor-grabbing select-none"
+              className="reel-phone-mockup relative w-[300px] h-[600px] rounded-[50px] border-[12px] border-neutral-900 bg-neutral-950 shadow-2xl overflow-hidden shadow-purple-500/5 touch-pan-y cursor-grab active:cursor-grabbing select-none"
             >
               
               {/* Notch */}

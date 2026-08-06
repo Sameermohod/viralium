@@ -527,9 +527,9 @@ html.lenis, html.lenis body {
   color: #0f172a !important;
 }
 
-/* Video Overlay Adjustments in Light Mode */
+/* Video Handling in Light Mode: Default opacity is crisp 1.0 */
 .light-mode video {
-  opacity: 0.15 !important;
+  opacity: 1 !important;
 }
 
 /* Modal & Dialog Overlays */
@@ -555,6 +555,94 @@ html.lenis, html.lenis body {
   border-color: rgba(30, 41, 59, 0.25) !important;
 }
 
+/* Button & Icon Color Fixes in Light Mode */
+.light-mode button.bg-neutral-900,
+.light-mode .bg-neutral-900 button,
+.light-mode button.bg-neutral-800 {
+  color: #0f172a !important;
+}
+
+.light-mode button[class*="f27424"],
+.light-mode button[class*="ff6b00"],
+.light-mode button[class*="1d9bf0"],
+.light-mode button.bg-gradient-to-r,
+.light-mode a.bg-gradient-to-r,
+.light-mode button.bg-red-600,
+.light-mode button.bg-emerald-500 {
+  color: #ffffff !important;
+}
+
+.light-mode button.modal-close-btn,
+.light-mode .modal-close-btn {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.light-mode button.modal-close-btn:hover,
+.light-mode .modal-close-btn:hover {
+  background-color: #f27424 !important;
+  color: #ffffff !important;
+}
+
+/* Theatre Lightbox Modal (Showreel & Portfolio) */
+.light-mode .showreel-modal {
+  background-color: rgba(9, 13, 20, 0.96) !important;
+}
+
+.light-mode .showreel-modal video {
+  opacity: 1 !important;
+}
+
+/* Instagram Reel Phone Mockup in Light Mode */
+.light-mode .reel-phone-mockup {
+  background-color: #090d14 !important;
+  border-color: #1e293b !important;
+}
+
+.light-mode .reel-phone-mockup h4,
+.light-mode .reel-phone-mockup p,
+.light-mode .reel-phone-mockup span,
+.light-mode .reel-phone-mockup div {
+  color: #ffffff !important;
+}
+
+.light-mode .reel-phone-mockup [class*="ff6b00"] {
+  color: #ff6b00 !important;
+}
+
+.light-mode .reel-phone-mockup .text-neutral-300,
+.light-mode .reel-phone-mockup .text-neutral-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Portfolio Video Card Hover Overlays in Light Mode */
+.light-mode .video-card-overlay h3,
+.light-mode .video-card-overlay p,
+.light-mode .video-card-overlay span {
+  color: #ffffff !important;
+}
+
+.light-mode .video-card-overlay [class*="ff6b00"],
+.light-mode .video-card-overlay [class*="f27424"] {
+  color: #ff6b00 !important;
+}
+
+.light-mode .video-card-overlay .text-neutral-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Showreel Metadata Overlays in Light Mode */
+.light-mode .showreel-metadata span {
+  color: #ffffff !important;
+}
+
+/* Before & After Badges in Light Mode */
+.light-mode .before-after-badge {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  color: #ffffff !important;
+}
+
 /* ==========================================
    HERO SECTION SPECIFIC LIGHT MODE OVERRIDES
    ========================================== */
@@ -562,8 +650,12 @@ html.lenis, html.lenis body {
   background-color: #fdfbf7 !important;
 }
 
+.light-mode section.hero-section video {
+  opacity: 0.55 !important;
+}
+
 .light-mode .hero-video-overlay {
-  background: linear-gradient(to top, #fdfbf7 0%, rgba(253, 251, 247, 0.4) 50%, #fdfbf7 100%) !important;
+  background: linear-gradient(to top, #fdfbf7 0%, rgba(253, 251, 247, 0.45) 50%, rgba(253, 251, 247, 0.75) 100%) !important;
 }
 
 .light-mode .hero-stat-number {
@@ -575,12 +667,13 @@ html.lenis, html.lenis body {
 }
 
 .light-mode .hero-secondary-btn {
-  background: rgba(15, 23, 42, 0.05) !important;
+  background: rgba(15, 23, 42, 0.06) !important;
   color: #0f172a !important;
-  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+  border: 1px solid rgba(15, 23, 42, 0.18) !important;
 }
 
 .light-mode .hero-secondary-btn:hover {
-  background: rgba(15, 23, 42, 0.1) !important;
+  background: rgba(15, 23, 42, 0.12) !important;
   color: #0f172a !important;
 }
+
